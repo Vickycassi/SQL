@@ -1,0 +1,1502 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Hector/Desktop/Sprint 6/Problematica1.sql" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3340"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,8:mainTarjetas"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Marca_Tarjetas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="1" mode="1"/></sort><column_widths><column index="1" value="149"/><column index="2" value="187"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Tarjetas" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="76"/><column index="2" value="57"/><column index="3" value="40"/><column index="5" value="118"/><column index="6" value="71"/><column index="7" value="67"/><column index="8" value="89"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter><filter value="fecha"/></global_filter></table><table schema="main" name="Tipo_de_Cliente" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="132"/><column index="2" value="87"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Tipos_de_Cuenta" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="133"/><column index="2" value="167"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="Problematica1">CREATE TABLE Tipo_de_Cliente (
+Tipo_de_Cliente_ID INTEGER PRIMARY KEY,
+Descrp_Tipo TEXT NOT NULL
+);
+
+
+CREATE TABLE Marca_Tarjetas (
+Marca_de_Tarjeta_ID INTEGER PRIMARY KEY,
+Marca_de_Tarjeta_NOMBRE TEXT NOT NULL
+);
+
+ 
+CREATE TABLE Tipos_de_Cuenta (
+Tipo_de_Cuenta_Id INTEGER PRIMARY KEY,
+Tipo_Cuenta_Descrp TEXT NOT NULL
+);
+
+
+INSERT INTO Tipo_de_Cliente (Descrp_Tipo)
+VALUES (&quot;BLACK&quot;),(&quot;GOLD&quot;),(&quot;CLASSIC&quot;);
+
+
+INSERT INTO Marca_Tarjetas (Marca_de_Tarjeta_NOMBRE)
+VALUES (&quot;American Express&quot;), (&quot;Mastercard&quot;), (&quot;Visa&quot;);
+
+
+INSERT INTO Tipos_de_Cuenta (Tipo_Cuenta_Descrp)
+VALUES (&quot;Caja de ahorros en Dólares&quot;), (&quot;Cuenta corriente en Pesos&quot;), 
+       (&quot;Cuenta corriente en Dólares&quot;), (&quot;Cuenta inversion&quot;), (&quot;Caja de ahorros en Pesos&quot;);
+
+
+CREATE TABLE Tarjetas (
+Tarjeta_Id INTEGER PRIMARY KEY,
+Numero INTEGER NOT NULL UNIQUE CHECK (length(Numero) &lt;= 20),
+CVV INTEGER NOT NULL CHECK (length(CVV) BETWEEN 3 AND 4) ,
+Fecha_Emision TEXT NOT NULL CHECK (length(Fecha_Emision) = 5),
+Fecha_Expiracion TEXT NOT NULL CHECK (length(Fecha_Expiracion) = 5),
+Cred_Deb TEXT NOT NULL,
+Marca_id INTEGER NOT NULL,
+Customer_id INTEGER NOT NULL,
+FOREIGN KEY (Marca_id)
+	REFERENCES Marca_Tarjetas (Marca_de_Tarjeta_ID),
+FOREIGN KEY (Customer_id)
+	REFERENCES cliente (customer_id)
+);
+
+
+
+
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (84138997651366720000,744,&quot;10/21&quot;,&quot;11/31&quot;,&quot;Credito&quot;,1,12),
+  (26667335294147502000,359,&quot;12/25&quot;,&quot;12/28&quot;,&quot;Credito&quot;,2,124),
+  (75590857844539590000,916,&quot;02/24&quot;,&quot;10/31&quot;,&quot;Debito&quot;,1,186),
+  (56620202607122960000,879,&quot;01/23&quot;,&quot;01/32&quot;,&quot;Credito&quot;,2,224),
+  (67924260440063230000,666,&quot;10/21&quot;,&quot;03/33&quot;,&quot;Credito&quot;,1,248),
+  (91092992715918200000,628,&quot;04/25&quot;,&quot;11/29&quot;,&quot;Credito&quot;,1,449),
+  (19306115338476100000,557,&quot;12/22&quot;,&quot;02/29&quot;,&quot;Credito&quot;,2,241),
+  (24607878002897297000,889,&quot;11/26&quot;,&quot;03/29&quot;,&quot;Debito&quot;,2,255),
+  (39057693438860040000,553,&quot;04/27&quot;,&quot;05/33&quot;,&quot;Credito&quot;,2,391),
+  (27571415897291650000,789,&quot;04/27&quot;,&quot;01/30&quot;,&quot;Debito&quot;,2,137);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (77339804625877530000,886,&quot;03/23&quot;,&quot;08/30&quot;,&quot;Debito&quot;,1,57),
+  (10288886774009852000,573,&quot;01/26&quot;,&quot;12/31&quot;,&quot;Debito&quot;,3,174),
+  (22248390312700764000,350,&quot;07/24&quot;,&quot;03/31&quot;,&quot;Credito&quot;,3,282),
+  (43952764551239680000,922,&quot;05/24&quot;,&quot;01/29&quot;,&quot;Debito&quot;,3,476),
+  (17245549067585760000,962,&quot;06/23&quot;,&quot;01/29&quot;,&quot;Credito&quot;,2,418),
+  (55245977364944520000,761,&quot;05/24&quot;,&quot;11/29&quot;,&quot;Debito&quot;,2,29),
+  (71140314571571040000,293,&quot;10/22&quot;,&quot;09/30&quot;,&quot;Debito&quot;,1,143),
+  (47278435552290640000,979,&quot;04/22&quot;,&quot;07/31&quot;,&quot;Credito&quot;,2,79),
+  (32548558782194770000,503,&quot;11/23&quot;,&quot;10/32&quot;,&quot;Debito&quot;,2,117),
+  (95185302434304230000,262,&quot;02/26&quot;,&quot;02/30&quot;,&quot;Debito&quot;,2,496);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (35509086308742180000,564,&quot;04/25&quot;,&quot;02/33&quot;,&quot;Debito&quot;,2,487),
+  (14754272953550991000,846,&quot;08/25&quot;,&quot;09/29&quot;,&quot;Credito&quot;,2,149),
+  (39403518716606550000,476,&quot;11/25&quot;,&quot;05/31&quot;,&quot;Debito&quot;,2,424),
+  (78376839209730200000,895,&quot;11/25&quot;,&quot;07/29&quot;,&quot;Credito&quot;,2,93),
+  (63845980733870050000,532,&quot;08/22&quot;,&quot;10/31&quot;,&quot;Credito&quot;,2,499),
+  (38942738513160946000,749,&quot;07/23&quot;,&quot;04/29&quot;,&quot;Credito&quot;,3,318),
+  (96317450668848350000,401,&quot;02/25&quot;,&quot;08/32&quot;,&quot;Credito&quot;,2,375),
+  (89807497430277060000,319,&quot;09/23&quot;,&quot;09/30&quot;,&quot;Debito&quot;,2,226),
+  (52280038942638020000,699,&quot;12/24&quot;,&quot;01/29&quot;,&quot;Debito&quot;,2,413),
+  (74129043526415810000,868,&quot;12/21&quot;,&quot;11/31&quot;,&quot;Credito&quot;,2,222);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (25416122693050032000,858,&quot;02/23&quot;,&quot;07/30&quot;,&quot;Credito&quot;,1,198),
+  (13152822841109094000,698,&quot;08/21&quot;,&quot;10/30&quot;,&quot;Credito&quot;,3,236),
+  (52212378788045290000,355,&quot;10/22&quot;,&quot;11/32&quot;,&quot;Debito&quot;,3,236),
+  (10490380203022438000,690,&quot;04/27&quot;,&quot;11/28&quot;,&quot;Debito&quot;,1,191),
+  (96771894005909010000,353,&quot;06/27&quot;,&quot;07/29&quot;,&quot;Debito&quot;,2,245),
+  (88964683332370450000,538,&quot;01/22&quot;,&quot;10/28&quot;,&quot;Debito&quot;,1,429),
+  (73712038097780290000,665,&quot;03/24&quot;,&quot;06/33&quot;,&quot;Credito&quot;,3,314),
+  (63666827925787930000,502,&quot;12/24&quot;,&quot;11/31&quot;,&quot;Credito&quot;,2,176),
+  (53782196849456030000,642,&quot;11/22&quot;,&quot;05/32&quot;,&quot;Debito&quot;,1,27),
+  (20199218940887210000,881,&quot;06/26&quot;,&quot;08/28&quot;,&quot;Credito&quot;,2,138);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (10224275430130772000,462,&quot;07/23&quot;,&quot;12/32&quot;,&quot;Debito&quot;,2,60),
+  (83983846376319730000,343,&quot;06/25&quot;,&quot;03/33&quot;,&quot;Debito&quot;,3,422),
+  (22924182006287237000,817,&quot;01/24&quot;,&quot;01/33&quot;,&quot;Credito&quot;,3,122),
+  (71305538710566080000,683,&quot;02/24&quot;,&quot;11/29&quot;,&quot;Credito&quot;,1,89),
+  (44796763361578070000,181,&quot;03/24&quot;,&quot;12/32&quot;,&quot;Credito&quot;,2,120),
+  (23442850412355970000,202,&quot;10/26&quot;,&quot;07/31&quot;,&quot;Credito&quot;,3,454),
+  (83918180959396460000,754,&quot;08/24&quot;,&quot;01/31&quot;,&quot;Credito&quot;,1,312),
+  (89618879624803840000,869,&quot;03/25&quot;,&quot;08/31&quot;,&quot;Credito&quot;,2,352),
+  (48525102877229380000,419,&quot;12/25&quot;,&quot;09/29&quot;,&quot;Debito&quot;,1,342),
+  (29035514570675710000,807,&quot;01/23&quot;,&quot;03/29&quot;,&quot;Debito&quot;,2,375);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (46030796457664135000,408,&quot;02/25&quot;,&quot;02/31&quot;,&quot;Credito&quot;,1,249),
+  (16811163485172834000,452,&quot;08/22&quot;,&quot;03/32&quot;,&quot;Credito&quot;,3,78),
+  (83998940804459760000,678,&quot;04/22&quot;,&quot;12/28&quot;,&quot;Credito&quot;,2,244),
+  (92482530421368360000,399,&quot;11/24&quot;,&quot;04/30&quot;,&quot;Debito&quot;,3,274),
+  (43792637692852630000,805,&quot;08/21&quot;,&quot;04/29&quot;,&quot;Debito&quot;,2,246),
+  (15639290173322203000,935,&quot;03/27&quot;,&quot;11/30&quot;,&quot;Credito&quot;,1,478),
+  (86349390971031470000,261,&quot;05/26&quot;,&quot;12/30&quot;,&quot;Debito&quot;,1,198),
+  (65413042703124546000,784,&quot;12/25&quot;,&quot;09/29&quot;,&quot;Credito&quot;,3,345),
+  (45326003343397550000,788,&quot;02/24&quot;,&quot;10/29&quot;,&quot;Credito&quot;,3,40),
+  (54169466115389830000,902,&quot;01/24&quot;,&quot;11/30&quot;,&quot;Credito&quot;,2,10);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (57753619356101670000,519,&quot;09/25&quot;,&quot;01/30&quot;,&quot;Debito&quot;,1,308),
+  (85953993278326420000,978,&quot;09/25&quot;,&quot;12/32&quot;,&quot;Credito&quot;,3,363),
+  (85875536264196060000,412,&quot;07/23&quot;,&quot;04/30&quot;,&quot;Debito&quot;,1,132),
+  (35459915985750830000,923,&quot;03/22&quot;,&quot;09/29&quot;,&quot;Debito&quot;,2,72),
+  (98460263543768970000,392,&quot;04/24&quot;,&quot;06/30&quot;,&quot;Credito&quot;,3,422),
+  (87297967560555460000,103,&quot;10/26&quot;,&quot;09/29&quot;,&quot;Debito&quot;,3,456),
+  (32670807677783687000,356,&quot;10/21&quot;,&quot;04/29&quot;,&quot;Credito&quot;,3,368),
+  (50648159111836160000,630,&quot;10/21&quot;,&quot;12/29&quot;,&quot;Debito&quot;,3,390),
+  (80768483924119600000,303,&quot;04/27&quot;,&quot;03/31&quot;,&quot;Credito&quot;,3,270),
+  (88656890252059510000,950,&quot;05/27&quot;,&quot;12/31&quot;,&quot;Credito&quot;,3,49);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (40705024483938830000,398,&quot;05/26&quot;,&quot;08/32&quot;,&quot;Credito&quot;,3,373),
+  (90485117444983050000,210,&quot;01/23&quot;,&quot;10/31&quot;,&quot;Debito&quot;,1,78),
+  (86652157269218340000,473,&quot;03/27&quot;,&quot;07/31&quot;,&quot;Credito&quot;,2,130),
+  (84665733690136280000,422,&quot;06/27&quot;,&quot;08/32&quot;,&quot;Debito&quot;,2,458),
+  (92194906213631150000,185,&quot;07/27&quot;,&quot;01/31&quot;,&quot;Debito&quot;,2,322),
+  (48818641333116920000,103,&quot;03/22&quot;,&quot;07/30&quot;,&quot;Debito&quot;,2,107),
+  (40150676844347550000,944,&quot;05/26&quot;,&quot;11/31&quot;,&quot;Debito&quot;,3,47),
+  (22830356334910816000,332,&quot;01/25&quot;,&quot;07/32&quot;,&quot;Debito&quot;,2,308),
+  (63363527649312430000,781,&quot;12/24&quot;,&quot;03/33&quot;,&quot;Debito&quot;,2,66),
+  (66108936864535240000,229,&quot;04/27&quot;,&quot;10/28&quot;,&quot;Credito&quot;,2,423);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (86024246253659570000,968,&quot;06/27&quot;,&quot;10/28&quot;,&quot;Debito&quot;,2,390),
+  (26498648221948228000,979,&quot;01/23&quot;,&quot;08/30&quot;,&quot;Credito&quot;,2,449),
+  (50660893000505385000,522,&quot;03/27&quot;,&quot;03/29&quot;,&quot;Debito&quot;,3,483),
+  (42527604081764470000,778,&quot;10/26&quot;,&quot;01/32&quot;,&quot;Debito&quot;,2,24),
+  (13047700348841239000,315,&quot;07/24&quot;,&quot;06/33&quot;,&quot;Credito&quot;,1,399),
+  (31380979911479038000,242,&quot;04/25&quot;,&quot;05/33&quot;,&quot;Debito&quot;,1,500),
+  (99425428106087090000,252,&quot;02/23&quot;,&quot;05/32&quot;,&quot;Credito&quot;,1,352),
+  (85377877832503480000,768,&quot;08/26&quot;,&quot;11/32&quot;,&quot;Debito&quot;,3,351),
+  (10684643083272399000,208,&quot;05/26&quot;,&quot;12/29&quot;,&quot;Credito&quot;,2,492),
+  (62639683752242090000,515,&quot;02/27&quot;,&quot;08/28&quot;,&quot;Debito&quot;,2,485);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (26748310657589340000,397,&quot;09/22&quot;,&quot;08/31&quot;,&quot;Credito&quot;,2,375),
+  (83611452561988060000,878,&quot;07/26&quot;,&quot;04/33&quot;,&quot;Debito&quot;,2,202),
+  (66655244453326260000,195,&quot;06/25&quot;,&quot;02/31&quot;,&quot;Debito&quot;,3,436),
+  (27607103637553800000,890,&quot;11/25&quot;,&quot;05/30&quot;,&quot;Credito&quot;,3,9),
+  (91168291786917840000,578,&quot;09/23&quot;,&quot;10/29&quot;,&quot;Debito&quot;,2,304),
+  (25178484011307926000,667,&quot;06/27&quot;,&quot;04/32&quot;,&quot;Credito&quot;,2,184),
+  (34170280739017003000,846,&quot;11/21&quot;,&quot;12/32&quot;,&quot;Debito&quot;,1,401),
+  (80817678728285200000,168,&quot;08/21&quot;,&quot;02/33&quot;,&quot;Credito&quot;,1,309),
+  (67639105624829170000,966,&quot;03/26&quot;,&quot;09/28&quot;,&quot;Credito&quot;,2,347),
+  (37999050143394546000,104,&quot;06/26&quot;,&quot;01/30&quot;,&quot;Credito&quot;,2,203);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (92671549318868400000,499,&quot;12/21&quot;,&quot;03/33&quot;,&quot;Debito&quot;,2,308),
+  (32188518037462860000,982,&quot;12/24&quot;,&quot;01/31&quot;,&quot;Debito&quot;,1,359),
+  (58317120664088910000,604,&quot;10/24&quot;,&quot;12/31&quot;,&quot;Credito&quot;,2,345),
+  (13339081158250790000,532,&quot;05/24&quot;,&quot;09/30&quot;,&quot;Credito&quot;,2,479),
+  (94979791759164880000,287,&quot;01/25&quot;,&quot;03/33&quot;,&quot;Credito&quot;,3,312),
+  (64617564446406730000,698,&quot;03/27&quot;,&quot;10/32&quot;,&quot;Debito&quot;,3,255),
+  (13922765765341970000,370,&quot;06/27&quot;,&quot;09/30&quot;,&quot;Debito&quot;,1,52),
+  (11577237335778330000,344,&quot;07/27&quot;,&quot;10/29&quot;,&quot;Debito&quot;,2,385),
+  (69045636021061570000,467,&quot;05/24&quot;,&quot;07/33&quot;,&quot;Credito&quot;,2,166),
+  (83667051948077940000,359,&quot;08/23&quot;,&quot;09/31&quot;,&quot;Credito&quot;,1,270);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (25558309121672823000,198,&quot;04/25&quot;,&quot;01/32&quot;,&quot;Credito&quot;,1,309),
+  (43185877510453660000,632,&quot;02/23&quot;,&quot;04/30&quot;,&quot;Debito&quot;,1,320),
+  (59317295265303910000,596,&quot;03/23&quot;,&quot;10/28&quot;,&quot;Credito&quot;,3,74),
+  (79955573667713990000,969,&quot;11/24&quot;,&quot;10/30&quot;,&quot;Debito&quot;,1,492),
+  (87363826206912760000,122,&quot;02/27&quot;,&quot;10/29&quot;,&quot;Credito&quot;,2,450),
+  (66655347606683795000,678,&quot;05/26&quot;,&quot;12/32&quot;,&quot;Credito&quot;,3,489),
+  (70672304382332750000,197,&quot;07/22&quot;,&quot;01/32&quot;,&quot;Credito&quot;,1,368),
+  (66508384701254610000,965,&quot;05/22&quot;,&quot;06/33&quot;,&quot;Debito&quot;,2,143),
+  (62226830657451960000,581,&quot;05/22&quot;,&quot;02/31&quot;,&quot;Credito&quot;,2,263),
+  (13227125117608210000,362,&quot;08/25&quot;,&quot;02/33&quot;,&quot;Debito&quot;,1,27);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (89505672651834560000,776,&quot;09/22&quot;,&quot;03/32&quot;,&quot;Debito&quot;,2,329),
+  (10468367863549911000,511,&quot;03/27&quot;,&quot;07/30&quot;,&quot;Credito&quot;,3,108),
+  (27858855558692480000,596,&quot;10/24&quot;,&quot;12/28&quot;,&quot;Debito&quot;,1,48),
+  (28951481120906945000,152,&quot;12/22&quot;,&quot;06/29&quot;,&quot;Credito&quot;,1,81),
+  (62761021351549160000,423,&quot;04/22&quot;,&quot;09/29&quot;,&quot;Credito&quot;,1,337),
+  (31835344829695496000,581,&quot;07/27&quot;,&quot;01/30&quot;,&quot;Debito&quot;,3,84),
+  (20449455304607465000,958,&quot;03/24&quot;,&quot;02/32&quot;,&quot;Debito&quot;,1,426),
+  (53564511102013960000,854,&quot;04/25&quot;,&quot;12/31&quot;,&quot;Credito&quot;,2,272),
+  (63799966788660355000,899,&quot;04/27&quot;,&quot;11/32&quot;,&quot;Credito&quot;,1,332),
+  (27817460408282235000,871,&quot;10/25&quot;,&quot;11/28&quot;,&quot;Debito&quot;,3,261);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (32821973920904626000,117,&quot;12/23&quot;,&quot;09/29&quot;,&quot;Credito&quot;,2,198),
+  (40002092496790650000,679,&quot;10/25&quot;,&quot;03/29&quot;,&quot;Credito&quot;,3,354),
+  (72437393675340970000,690,&quot;05/24&quot;,&quot;07/32&quot;,&quot;Debito&quot;,2,171),
+  (16929796427293024000,623,&quot;08/25&quot;,&quot;02/32&quot;,&quot;Credito&quot;,3,14),
+  (91911660881184210000,164,&quot;09/22&quot;,&quot;05/29&quot;,&quot;Debito&quot;,1,108),
+  (77797607072696070000,478,&quot;08/22&quot;,&quot;08/30&quot;,&quot;Credito&quot;,1,75),
+  (85835489244663680000,482,&quot;10/22&quot;,&quot;05/33&quot;,&quot;Debito&quot;,3,79),
+  (82715319904195670000,237,&quot;02/27&quot;,&quot;11/29&quot;,&quot;Credito&quot;,1,316),
+  (30140950262071976000,477,&quot;11/25&quot;,&quot;02/30&quot;,&quot;Credito&quot;,3,155),
+  (93289997803301470000,557,&quot;01/25&quot;,&quot;05/32&quot;,&quot;Debito&quot;,1,58);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (49496390444414755000,415,&quot;07/22&quot;,&quot;04/31&quot;,&quot;Credito&quot;,1,243),
+  (83140466180616290000,219,&quot;05/24&quot;,&quot;08/32&quot;,&quot;Credito&quot;,1,341),
+  (25707055255409630000,341,&quot;08/26&quot;,&quot;08/32&quot;,&quot;Debito&quot;,2,388),
+  (99607694520873960000,855,&quot;12/21&quot;,&quot;10/31&quot;,&quot;Credito&quot;,2,434),
+  (11883064750292214000,457,&quot;04/24&quot;,&quot;05/33&quot;,&quot;Credito&quot;,2,2),
+  (22629087756159380000,774,&quot;11/26&quot;,&quot;10/32&quot;,&quot;Debito&quot;,2,478),
+  (96145939737536990000,142,&quot;07/26&quot;,&quot;10/29&quot;,&quot;Credito&quot;,1,8),
+  (66829579202611905000,837,&quot;06/25&quot;,&quot;05/32&quot;,&quot;Credito&quot;,2,303),
+  (11627810680710269000,300,&quot;10/26&quot;,&quot;05/31&quot;,&quot;Debito&quot;,2,20),
+  (54704120065139610000,799,&quot;02/24&quot;,&quot;07/29&quot;,&quot;Debito&quot;,1,490);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (54912470271111860000,569,&quot;12/26&quot;,&quot;02/32&quot;,&quot;Debito&quot;,2,164),
+  (29091953097477770000,782,&quot;11/26&quot;,&quot;02/33&quot;,&quot;Credito&quot;,2,23),
+  (22844397253988557000,995,&quot;10/23&quot;,&quot;11/29&quot;,&quot;Credito&quot;,2,132),
+  (47248754238996000000,606,&quot;04/25&quot;,&quot;06/33&quot;,&quot;Debito&quot;,2,334),
+  (89340806345986930000,945,&quot;05/26&quot;,&quot;06/31&quot;,&quot;Debito&quot;,3,61),
+  (97806211529075210000,718,&quot;07/27&quot;,&quot;11/28&quot;,&quot;Credito&quot;,2,403),
+  (49740540846332715000,706,&quot;04/22&quot;,&quot;06/32&quot;,&quot;Debito&quot;,1,33),
+  (53475531699978540000,582,&quot;05/23&quot;,&quot;10/29&quot;,&quot;Debito&quot;,2,312),
+  (57874625229073650000,348,&quot;02/24&quot;,&quot;04/29&quot;,&quot;Debito&quot;,2,175),
+  (37235262258353080000,923,&quot;12/23&quot;,&quot;11/29&quot;,&quot;Credito&quot;,3,80);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (95228016858126800000,323,&quot;02/22&quot;,&quot;04/32&quot;,&quot;Credito&quot;,1,416),
+  (37925043483718020000,652,&quot;04/22&quot;,&quot;12/32&quot;,&quot;Debito&quot;,3,273),
+  (50427714971113070000,503,&quot;10/23&quot;,&quot;05/31&quot;,&quot;Debito&quot;,1,5),
+  (90869738276822630000,234,&quot;02/27&quot;,&quot;06/32&quot;,&quot;Credito&quot;,1,324),
+  (23154633310446330000,911,&quot;10/23&quot;,&quot;12/30&quot;,&quot;Debito&quot;,1,88),
+  (52950967070052640000,301,&quot;12/24&quot;,&quot;05/29&quot;,&quot;Credito&quot;,2,218),
+  (39060250852259594000,852,&quot;11/24&quot;,&quot;02/31&quot;,&quot;Debito&quot;,2,329),
+  (80741086163555450000,269,&quot;10/21&quot;,&quot;12/28&quot;,&quot;Debito&quot;,3,192),
+  (37060633557004560000,436,&quot;04/26&quot;,&quot;06/31&quot;,&quot;Debito&quot;,3,327),
+  (37033890369073970000,553,&quot;04/22&quot;,&quot;12/30&quot;,&quot;Credito&quot;,2,186);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (48667662493155295000,516,&quot;12/26&quot;,&quot;10/31&quot;,&quot;Debito&quot;,3,45),
+  (37308348615185190000,335,&quot;11/24&quot;,&quot;11/32&quot;,&quot;Debito&quot;,3,355),
+  (36400641053753770000,278,&quot;04/25&quot;,&quot;04/29&quot;,&quot;Debito&quot;,2,387),
+  (73873941656423460000,845,&quot;09/22&quot;,&quot;05/30&quot;,&quot;Debito&quot;,1,47),
+  (29198974847411487000,268,&quot;02/27&quot;,&quot;01/29&quot;,&quot;Credito&quot;,2,230),
+  (79889493266515980000,477,&quot;06/23&quot;,&quot;06/30&quot;,&quot;Debito&quot;,1,159),
+  (24357831917001957000,378,&quot;07/24&quot;,&quot;04/33&quot;,&quot;Debito&quot;,2,411),
+  (95506747458917140000,678,&quot;12/25&quot;,&quot;02/29&quot;,&quot;Debito&quot;,1,60),
+  (99921559272563340000,107,&quot;12/26&quot;,&quot;05/33&quot;,&quot;Credito&quot;,2,17),
+  (50541812942884540000,755,&quot;04/25&quot;,&quot;07/33&quot;,&quot;Credito&quot;,3,351);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (31192031260058526000,127,&quot;03/23&quot;,&quot;05/33&quot;,&quot;Credito&quot;,3,194),
+  (75982213066303900000,318,&quot;08/22&quot;,&quot;01/32&quot;,&quot;Debito&quot;,2,306),
+  (77495325698900430000,257,&quot;02/27&quot;,&quot;09/30&quot;,&quot;Credito&quot;,1,496),
+  (31942195220940816000,656,&quot;03/26&quot;,&quot;03/30&quot;,&quot;Debito&quot;,1,55),
+  (13936648055462300000,938,&quot;07/24&quot;,&quot;02/29&quot;,&quot;Credito&quot;,2,449),
+  (83487886506318400000,989,&quot;06/24&quot;,&quot;03/30&quot;,&quot;Debito&quot;,3,181),
+  (77948768949359700000,748,&quot;04/26&quot;,&quot;02/29&quot;,&quot;Credito&quot;,2,169),
+  (27617585604126097000,218,&quot;08/21&quot;,&quot;06/29&quot;,&quot;Debito&quot;,2,174),
+  (72012594455615650000,414,&quot;07/25&quot;,&quot;06/32&quot;,&quot;Debito&quot;,2,26),
+  (53021261164816970000,263,&quot;01/27&quot;,&quot;11/31&quot;,&quot;Credito&quot;,3,215);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (72411882408255220000,393,&quot;08/22&quot;,&quot;12/32&quot;,&quot;Debito&quot;,1,221),
+  (13650802561098210000,648,&quot;12/22&quot;,&quot;01/30&quot;,&quot;Debito&quot;,2,144),
+  (52448147389893240000,912,&quot;05/26&quot;,&quot;12/30&quot;,&quot;Debito&quot;,2,302),
+  (19780194215726604000,522,&quot;02/25&quot;,&quot;08/32&quot;,&quot;Debito&quot;,3,281),
+  (16170180139124270000,174,&quot;06/24&quot;,&quot;01/30&quot;,&quot;Credito&quot;,3,497),
+  (58770742346547610000,162,&quot;05/26&quot;,&quot;07/31&quot;,&quot;Debito&quot;,1,368),
+  (92481311499800100000,353,&quot;07/23&quot;,&quot;09/28&quot;,&quot;Debito&quot;,2,387),
+  (37745154215572380000,797,&quot;09/24&quot;,&quot;08/30&quot;,&quot;Debito&quot;,2,327),
+  (61609224240620820000,106,&quot;05/22&quot;,&quot;02/30&quot;,&quot;Debito&quot;,3,7),
+  (14243563663023315000,326,&quot;05/25&quot;,&quot;04/32&quot;,&quot;Credito&quot;,2,279);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (29523800014658040000,975,&quot;10/22&quot;,&quot;07/30&quot;,&quot;Debito&quot;,1,232),
+  (90265476462491960000,804,&quot;06/23&quot;,&quot;06/31&quot;,&quot;Debito&quot;,2,433),
+  (86023239307149360000,435,&quot;02/23&quot;,&quot;04/33&quot;,&quot;Credito&quot;,1,458),
+  (68016335357003010000,167,&quot;01/27&quot;,&quot;02/30&quot;,&quot;Credito&quot;,2,158),
+  (21689795170176400000,316,&quot;11/26&quot;,&quot;03/30&quot;,&quot;Credito&quot;,2,338),
+  (28320891991188267000,524,&quot;02/27&quot;,&quot;06/33&quot;,&quot;Debito&quot;,1,287),
+  (76795986944640800000,160,&quot;11/21&quot;,&quot;01/32&quot;,&quot;Credito&quot;,1,142),
+  (76017819394915240000,248,&quot;12/25&quot;,&quot;06/29&quot;,&quot;Credito&quot;,1,444),
+  (83029253960202880000,955,&quot;06/24&quot;,&quot;08/31&quot;,&quot;Credito&quot;,1,92),
+  (67467492998746410000,869,&quot;03/23&quot;,&quot;10/31&quot;,&quot;Debito&quot;,1,323);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (45962628124978050000,751,&quot;05/24&quot;,&quot;02/31&quot;,&quot;Debito&quot;,2,464),
+  (42438959060977615000,435,&quot;12/21&quot;,&quot;09/32&quot;,&quot;Debito&quot;,2,283),
+  (75652047350794300000,420,&quot;11/25&quot;,&quot;12/28&quot;,&quot;Debito&quot;,1,139),
+  (91345697104276780000,647,&quot;01/23&quot;,&quot;07/31&quot;,&quot;Credito&quot;,3,6),
+  (50662553722188160000,870,&quot;08/26&quot;,&quot;02/30&quot;,&quot;Credito&quot;,1,313),
+  (69709118524128110000,345,&quot;10/25&quot;,&quot;05/29&quot;,&quot;Credito&quot;,2,440),
+  (72831624679577870000,677,&quot;12/21&quot;,&quot;06/29&quot;,&quot;Debito&quot;,2,193),
+  (99454040172043850000,757,&quot;08/21&quot;,&quot;09/30&quot;,&quot;Credito&quot;,1,458),
+  (61075679420023750000,583,&quot;03/25&quot;,&quot;09/29&quot;,&quot;Debito&quot;,2,121),
+  (62389068783419510000,548,&quot;04/26&quot;,&quot;03/30&quot;,&quot;Debito&quot;,3,54);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (41836786805295284000,747,&quot;03/22&quot;,&quot;08/30&quot;,&quot;Debito&quot;,2,251),
+  (90954895383081290000,509,&quot;07/25&quot;,&quot;07/32&quot;,&quot;Credito&quot;,1,444),
+  (43890275948685980000,879,&quot;07/27&quot;,&quot;06/30&quot;,&quot;Credito&quot;,1,102),
+  (59405278599348550000,188,&quot;04/22&quot;,&quot;02/30&quot;,&quot;Debito&quot;,1,181),
+  (92888028663639950000,385,&quot;05/25&quot;,&quot;11/29&quot;,&quot;Credito&quot;,2,352),
+  (28959055879976650000,313,&quot;10/23&quot;,&quot;04/29&quot;,&quot;Debito&quot;,2,244),
+  (30014066571511603000,331,&quot;06/25&quot;,&quot;11/32&quot;,&quot;Credito&quot;,3,89),
+  (16346469253603981000,920,&quot;07/27&quot;,&quot;09/30&quot;,&quot;Credito&quot;,2,348),
+  (86264149662870880000,474,&quot;09/25&quot;,&quot;03/33&quot;,&quot;Credito&quot;,3,73),
+  (83486316039533150000,162,&quot;01/26&quot;,&quot;08/32&quot;,&quot;Credito&quot;,2,271);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (61607583152720270000,741,&quot;01/24&quot;,&quot;06/33&quot;,&quot;Debito&quot;,3,217),
+  (83872868028089170000,565,&quot;07/26&quot;,&quot;05/31&quot;,&quot;Credito&quot;,3,221),
+  (72661618059222560000,471,&quot;05/26&quot;,&quot;06/30&quot;,&quot;Credito&quot;,3,79),
+  (78698605752686410000,620,&quot;05/27&quot;,&quot;05/29&quot;,&quot;Credito&quot;,2,10),
+  (50049047795263545000,653,&quot;08/26&quot;,&quot;01/30&quot;,&quot;Credito&quot;,2,46),
+  (66028911378890400000,402,&quot;01/24&quot;,&quot;05/32&quot;,&quot;Debito&quot;,2,115),
+  (74064078386211620000,179,&quot;09/21&quot;,&quot;08/31&quot;,&quot;Credito&quot;,1,163),
+  (53989013427122450000,658,&quot;01/25&quot;,&quot;04/30&quot;,&quot;Credito&quot;,2,176),
+  (32394663171996762000,614,&quot;12/26&quot;,&quot;04/32&quot;,&quot;Credito&quot;,2,481),
+  (35246311333968888000,484,&quot;08/25&quot;,&quot;10/29&quot;,&quot;Credito&quot;,2,198);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (96592578027090580000,345,&quot;11/26&quot;,&quot;09/32&quot;,&quot;Debito&quot;,2,296),
+  (24044691599400608000,173,&quot;09/23&quot;,&quot;09/29&quot;,&quot;Credito&quot;,2,40),
+  (42713711321464970000,703,&quot;09/23&quot;,&quot;04/31&quot;,&quot;Debito&quot;,2,500),
+  (39376176831639175000,631,&quot;08/25&quot;,&quot;06/30&quot;,&quot;Credito&quot;,2,17),
+  (93824903131406750000,174,&quot;05/22&quot;,&quot;03/33&quot;,&quot;Credito&quot;,1,185),
+  (32967037497076507000,622,&quot;05/24&quot;,&quot;10/29&quot;,&quot;Credito&quot;,2,39),
+  (88839687812139430000,551,&quot;06/23&quot;,&quot;11/28&quot;,&quot;Debito&quot;,2,437),
+  (54206857414952830000,445,&quot;04/23&quot;,&quot;08/30&quot;,&quot;Credito&quot;,1,244),
+  (93199727903580300000,744,&quot;06/27&quot;,&quot;01/33&quot;,&quot;Credito&quot;,3,103),
+  (86999204664549360000,698,&quot;01/27&quot;,&quot;06/30&quot;,&quot;Debito&quot;,1,225);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (56395831149611620000,155,&quot;10/22&quot;,&quot;09/28&quot;,&quot;Debito&quot;,2,129),
+  (67451679251887130000,781,&quot;09/21&quot;,&quot;10/32&quot;,&quot;Debito&quot;,2,110),
+  (52574630465549240000,560,&quot;11/23&quot;,&quot;10/28&quot;,&quot;Credito&quot;,1,143),
+  (92480518931939560000,364,&quot;05/27&quot;,&quot;10/32&quot;,&quot;Credito&quot;,1,206),
+  (72024311815449100000,735,&quot;08/22&quot;,&quot;05/29&quot;,&quot;Debito&quot;,2,229),
+  (87471056427736120000,839,&quot;11/24&quot;,&quot;07/29&quot;,&quot;Debito&quot;,1,444),
+  (49247201554617710000,974,&quot;07/24&quot;,&quot;02/29&quot;,&quot;Debito&quot;,2,473),
+  (63204053927752230000,183,&quot;03/26&quot;,&quot;06/29&quot;,&quot;Debito&quot;,2,10),
+  (77068871915508630000,836,&quot;11/21&quot;,&quot;10/29&quot;,&quot;Credito&quot;,3,474),
+  (49854315731249820000,815,&quot;12/25&quot;,&quot;06/30&quot;,&quot;Debito&quot;,1,172);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (13288404089202176000,562,&quot;02/23&quot;,&quot;04/29&quot;,&quot;Credito&quot;,2,367),
+  (85953529139975230000,984,&quot;03/26&quot;,&quot;05/29&quot;,&quot;Debito&quot;,2,120),
+  (27108302367946547000,219,&quot;02/25&quot;,&quot;09/28&quot;,&quot;Credito&quot;,3,148),
+  (39884708832842916000,428,&quot;01/23&quot;,&quot;07/33&quot;,&quot;Debito&quot;,2,370),
+  (17481893473328833000,703,&quot;04/24&quot;,&quot;02/32&quot;,&quot;Credito&quot;,3,494),
+  (37321316955701130000,758,&quot;01/26&quot;,&quot;02/31&quot;,&quot;Credito&quot;,2,284),
+  (12898865029303468000,242,&quot;02/25&quot;,&quot;11/29&quot;,&quot;Credito&quot;,2,188),
+  (56906099697975435000,788,&quot;04/24&quot;,&quot;12/29&quot;,&quot;Debito&quot;,3,486),
+  (70613434307011300000,855,&quot;07/22&quot;,&quot;04/29&quot;,&quot;Credito&quot;,2,73),
+  (31904234512518197000,895,&quot;02/24&quot;,&quot;03/29&quot;,&quot;Debito&quot;,2,19);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (42843271834634440000,224,&quot;05/24&quot;,&quot;04/33&quot;,&quot;Credito&quot;,2,340),
+  (30551772491486920000,976,&quot;01/24&quot;,&quot;01/30&quot;,&quot;Credito&quot;,3,160),
+  (27869491480862826000,876,&quot;02/22&quot;,&quot;11/31&quot;,&quot;Credito&quot;,3,61),
+  (21014812575446760000,725,&quot;04/22&quot;,&quot;12/28&quot;,&quot;Debito&quot;,1,490),
+  (93240865768744240000,421,&quot;09/25&quot;,&quot;04/30&quot;,&quot;Debito&quot;,2,283),
+  (79339179442471930000,188,&quot;02/24&quot;,&quot;02/32&quot;,&quot;Debito&quot;,2,263),
+  (58937507438360030000,583,&quot;06/27&quot;,&quot;06/31&quot;,&quot;Debito&quot;,2,395),
+  (58387963448593790000,304,&quot;07/27&quot;,&quot;12/29&quot;,&quot;Credito&quot;,2,281),
+  (26114152010185790000,293,&quot;10/24&quot;,&quot;04/31&quot;,&quot;Debito&quot;,2,59),
+  (89353619887099020000,337,&quot;09/22&quot;,&quot;11/31&quot;,&quot;Credito&quot;,1,466);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (70414122130053554000,904,&quot;04/24&quot;,&quot;05/31&quot;,&quot;Debito&quot;,3,144),
+  (65556413661279940000,357,&quot;08/25&quot;,&quot;04/29&quot;,&quot;Debito&quot;,2,472),
+  (28176336355884655000,869,&quot;10/25&quot;,&quot;03/31&quot;,&quot;Debito&quot;,1,143),
+  (71079305318888670000,670,&quot;01/23&quot;,&quot;05/32&quot;,&quot;Credito&quot;,2,144),
+  (86449577352940550000,216,&quot;04/27&quot;,&quot;02/29&quot;,&quot;Credito&quot;,2,100),
+  (70297356339306275000,911,&quot;04/27&quot;,&quot;05/32&quot;,&quot;Credito&quot;,3,479),
+  (90788273452498910000,727,&quot;01/24&quot;,&quot;05/33&quot;,&quot;Credito&quot;,1,419),
+  (23556173631183192000,594,&quot;01/23&quot;,&quot;05/32&quot;,&quot;Credito&quot;,2,176),
+  (41363395268650940000,666,&quot;11/23&quot;,&quot;09/28&quot;,&quot;Debito&quot;,1,450),
+  (75771149328447930000,796,&quot;12/24&quot;,&quot;10/30&quot;,&quot;Debito&quot;,2,88);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (93998003091194540000,121,&quot;02/26&quot;,&quot;04/29&quot;,&quot;Credito&quot;,1,67),
+  (39777889143460270000,604,&quot;01/22&quot;,&quot;05/31&quot;,&quot;Credito&quot;,1,270),
+  (79980456093059560000,207,&quot;11/24&quot;,&quot;04/29&quot;,&quot;Debito&quot;,2,261),
+  (98277783647377600000,469,&quot;05/23&quot;,&quot;05/31&quot;,&quot;Credito&quot;,2,101),
+  (33803328288526828000,651,&quot;02/23&quot;,&quot;09/32&quot;,&quot;Credito&quot;,2,342),
+  (26156792033288503000,519,&quot;05/23&quot;,&quot;03/29&quot;,&quot;Debito&quot;,3,470),
+  (27022781142403244000,397,&quot;05/26&quot;,&quot;10/32&quot;,&quot;Debito&quot;,3,362),
+  (88818241748555240000,242,&quot;12/22&quot;,&quot;02/31&quot;,&quot;Credito&quot;,3,476),
+  (32760662149160645000,706,&quot;10/22&quot;,&quot;12/32&quot;,&quot;Debito&quot;,1,459),
+  (26589945261384253000,532,&quot;09/22&quot;,&quot;08/31&quot;,&quot;Debito&quot;,2,301);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (88091818296404930000,726,&quot;06/24&quot;,&quot;03/31&quot;,&quot;Debito&quot;,2,84),
+  (15670324215017947000,473,&quot;09/24&quot;,&quot;07/32&quot;,&quot;Credito&quot;,1,46),
+  (17023688838751744000,620,&quot;03/22&quot;,&quot;10/31&quot;,&quot;Debito&quot;,2,118),
+  (57004200649508890000,634,&quot;06/26&quot;,&quot;03/33&quot;,&quot;Credito&quot;,2,444),
+  (72745617018272915000,205,&quot;04/25&quot;,&quot;12/31&quot;,&quot;Credito&quot;,3,278),
+  (68384319430984155000,816,&quot;09/24&quot;,&quot;08/28&quot;,&quot;Debito&quot;,2,46),
+  (49745465421265080000,960,&quot;05/27&quot;,&quot;10/32&quot;,&quot;Credito&quot;,2,139),
+  (94372144214938160000,180,&quot;08/24&quot;,&quot;03/33&quot;,&quot;Debito&quot;,3,70),
+  (41973795189159360000,605,&quot;08/25&quot;,&quot;01/33&quot;,&quot;Credito&quot;,2,253),
+  (72064713023675360000,262,&quot;08/24&quot;,&quot;06/29&quot;,&quot;Debito&quot;,2,411);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (37607238240879526000,887,&quot;10/22&quot;,&quot;01/32&quot;,&quot;Debito&quot;,1,437),
+  (15361551780107416000,432,&quot;12/26&quot;,&quot;09/32&quot;,&quot;Credito&quot;,1,3),
+  (46954160918665920000,894,&quot;02/22&quot;,&quot;06/32&quot;,&quot;Debito&quot;,1,37),
+  (11127570016154966000,940,&quot;08/21&quot;,&quot;01/31&quot;,&quot;Credito&quot;,1,27),
+  (70863771181402080000,368,&quot;07/22&quot;,&quot;12/31&quot;,&quot;Debito&quot;,2,499),
+  (28536762970290176000,179,&quot;11/23&quot;,&quot;01/31&quot;,&quot;Debito&quot;,2,57),
+  (95724519485188460000,885,&quot;12/21&quot;,&quot;01/30&quot;,&quot;Debito&quot;,2,333),
+  (74020988028214210000,549,&quot;10/23&quot;,&quot;03/30&quot;,&quot;Credito&quot;,1,28),
+  (33527022574144210000,551,&quot;06/22&quot;,&quot;02/32&quot;,&quot;Debito&quot;,2,442),
+  (79422988600414240000,212,&quot;08/22&quot;,&quot;10/31&quot;,&quot;Debito&quot;,3,411);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (93672993704654930000,550,&quot;07/22&quot;,&quot;05/32&quot;,&quot;Credito&quot;,2,377),
+  (65565051894857620000,170,&quot;04/25&quot;,&quot;01/32&quot;,&quot;Credito&quot;,1,500),
+  (81366297492558400000,292,&quot;08/24&quot;,&quot;04/30&quot;,&quot;Debito&quot;,2,63),
+  (68079727774058630000,363,&quot;04/23&quot;,&quot;10/30&quot;,&quot;Credito&quot;,3,276),
+  (14748287034126176000,749,&quot;12/23&quot;,&quot;06/31&quot;,&quot;Credito&quot;,3,49),
+  (72101501028425270000,945,&quot;08/23&quot;,&quot;04/29&quot;,&quot;Credito&quot;,1,262),
+  (43595395949094440000,833,&quot;09/22&quot;,&quot;05/29&quot;,&quot;Debito&quot;,3,175),
+  (65387434641903990000,466,&quot;06/27&quot;,&quot;11/30&quot;,&quot;Credito&quot;,2,61),
+  (40539940900259290000,220,&quot;06/23&quot;,&quot;03/31&quot;,&quot;Credito&quot;,2,288),
+  (90312611349606200000,563,&quot;04/22&quot;,&quot;04/30&quot;,&quot;Debito&quot;,2,81);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (81237666146090190000,554,&quot;03/22&quot;,&quot;10/30&quot;,&quot;Debito&quot;,1,472),
+  (31127888621621903000,722,&quot;11/23&quot;,&quot;01/33&quot;,&quot;Debito&quot;,1,11),
+  (24639175694004044000,325,&quot;01/27&quot;,&quot;01/29&quot;,&quot;Credito&quot;,1,73),
+  (28422012999117767000,268,&quot;07/27&quot;,&quot;11/30&quot;,&quot;Debito&quot;,2,174),
+  (77367903105130330000,782,&quot;08/23&quot;,&quot;05/29&quot;,&quot;Debito&quot;,2,422),
+  (16956151573671520000,692,&quot;12/25&quot;,&quot;12/31&quot;,&quot;Debito&quot;,2,294),
+  (41174889256945490000,656,&quot;10/25&quot;,&quot;04/30&quot;,&quot;Credito&quot;,2,119),
+  (81462582115606270000,440,&quot;03/24&quot;,&quot;06/31&quot;,&quot;Credito&quot;,2,331),
+  (26226032768314806000,578,&quot;12/26&quot;,&quot;01/32&quot;,&quot;Credito&quot;,1,32),
+  (17735888796410604000,217,&quot;09/24&quot;,&quot;07/29&quot;,&quot;Credito&quot;,2,484);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (53165927499004510000,179,&quot;08/21&quot;,&quot;08/29&quot;,&quot;Credito&quot;,3,29),
+  (21009598145467140000,891,&quot;11/26&quot;,&quot;07/29&quot;,&quot;Credito&quot;,3,445),
+  (95319619730449890000,817,&quot;01/24&quot;,&quot;06/29&quot;,&quot;Credito&quot;,1,87),
+  (52467913583488910000,685,&quot;12/21&quot;,&quot;10/29&quot;,&quot;Credito&quot;,3,248),
+  (14553067368743375000,509,&quot;02/22&quot;,&quot;05/32&quot;,&quot;Credito&quot;,1,225),
+  (18610572125646510000,135,&quot;01/26&quot;,&quot;07/32&quot;,&quot;Credito&quot;,2,411),
+  (89847005330127010000,596,&quot;02/26&quot;,&quot;04/33&quot;,&quot;Credito&quot;,1,24),
+  (87551565926527290000,656,&quot;12/22&quot;,&quot;09/30&quot;,&quot;Credito&quot;,2,402),
+  (68132891149656190000,987,&quot;05/25&quot;,&quot;05/31&quot;,&quot;Debito&quot;,1,354),
+  (52551623821814050000,742,&quot;06/25&quot;,&quot;07/30&quot;,&quot;Credito&quot;,2,422);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (88712701173699050000,324,&quot;12/26&quot;,&quot;11/30&quot;,&quot;Credito&quot;,1,110),
+  (43684021018768870000,947,&quot;03/24&quot;,&quot;12/28&quot;,&quot;Credito&quot;,3,233),
+  (80523746427497330000,791,&quot;07/27&quot;,&quot;04/30&quot;,&quot;Debito&quot;,3,66),
+  (83747553287804680000,433,&quot;03/23&quot;,&quot;07/29&quot;,&quot;Debito&quot;,1,420),
+  (63144586371591590000,320,&quot;11/22&quot;,&quot;02/33&quot;,&quot;Credito&quot;,3,280),
+  (90456289009097690000,726,&quot;01/26&quot;,&quot;01/31&quot;,&quot;Debito&quot;,2,185),
+  (95489082050755770000,441,&quot;01/22&quot;,&quot;05/33&quot;,&quot;Credito&quot;,2,124),
+  (24084737831574480000,882,&quot;11/22&quot;,&quot;04/30&quot;,&quot;Credito&quot;,1,42),
+  (40881758077481300000,531,&quot;02/26&quot;,&quot;10/29&quot;,&quot;Credito&quot;,2,425),
+  (52571046154438705000,219,&quot;06/27&quot;,&quot;11/32&quot;,&quot;Debito&quot;,2,497);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (27941732755802485000,726,&quot;08/22&quot;,&quot;03/31&quot;,&quot;Credito&quot;,2,259),
+  (81996861989815060000,889,&quot;06/26&quot;,&quot;08/32&quot;,&quot;Debito&quot;,2,446),
+  (62415879888475150000,571,&quot;09/24&quot;,&quot;04/29&quot;,&quot;Debito&quot;,2,462),
+  (40846571066174410000,490,&quot;12/21&quot;,&quot;12/28&quot;,&quot;Credito&quot;,2,107),
+  (79398481827528800000,323,&quot;04/22&quot;,&quot;03/30&quot;,&quot;Debito&quot;,2,335),
+  (51207607398770670000,530,&quot;04/22&quot;,&quot;07/32&quot;,&quot;Credito&quot;,2,298),
+  (34063216392779244000,718,&quot;01/22&quot;,&quot;04/31&quot;,&quot;Debito&quot;,2,486),
+  (81398864937596760000,250,&quot;01/26&quot;,&quot;12/29&quot;,&quot;Credito&quot;,2,182),
+  (53946614959672990000,520,&quot;09/26&quot;,&quot;11/28&quot;,&quot;Debito&quot;,1,325),
+  (31508049772230275000,689,&quot;01/26&quot;,&quot;05/29&quot;,&quot;Debito&quot;,1,360);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (74470007546738770000,693,&quot;06/27&quot;,&quot;11/31&quot;,&quot;Credito&quot;,3,344),
+  (38080615604462130000,380,&quot;11/26&quot;,&quot;06/30&quot;,&quot;Debito&quot;,2,239),
+  (55914036882708900000,204,&quot;03/27&quot;,&quot;03/32&quot;,&quot;Debito&quot;,2,68),
+  (49494798971581360000,563,&quot;11/22&quot;,&quot;09/28&quot;,&quot;Debito&quot;,3,321),
+  (56441815666536340000,267,&quot;04/25&quot;,&quot;01/31&quot;,&quot;Debito&quot;,3,168),
+  (10621227892239230000,965,&quot;11/25&quot;,&quot;01/31&quot;,&quot;Debito&quot;,1,442),
+  (50237777423704980000,229,&quot;12/23&quot;,&quot;12/32&quot;,&quot;Debito&quot;,1,22),
+  (63537649543278240000,825,&quot;01/25&quot;,&quot;06/33&quot;,&quot;Debito&quot;,1,103),
+  (79433581594679180000,307,&quot;08/21&quot;,&quot;02/29&quot;,&quot;Credito&quot;,2,292),
+  (49329194509330020000,199,&quot;03/24&quot;,&quot;03/29&quot;,&quot;Debito&quot;,2,352);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (14629502911677252000,156,&quot;05/26&quot;,&quot;09/31&quot;,&quot;Debito&quot;,2,137),
+  (30565954415049806000,753,&quot;12/21&quot;,&quot;03/32&quot;,&quot;Debito&quot;,3,182),
+  (21604809327428477000,748,&quot;02/27&quot;,&quot;11/32&quot;,&quot;Credito&quot;,2,190),
+  (43388284718163050000,587,&quot;06/22&quot;,&quot;08/32&quot;,&quot;Debito&quot;,3,285),
+  (90361037860385750000,289,&quot;03/23&quot;,&quot;03/30&quot;,&quot;Credito&quot;,3,351),
+  (68016834567838180000,237,&quot;07/25&quot;,&quot;03/32&quot;,&quot;Credito&quot;,1,208),
+  (11891668380268810000,762,&quot;12/23&quot;,&quot;09/31&quot;,&quot;Debito&quot;,3,30),
+  (15385242669440008000,919,&quot;10/24&quot;,&quot;02/29&quot;,&quot;Debito&quot;,1,243),
+  (22824256836766392000,145,&quot;03/24&quot;,&quot;11/32&quot;,&quot;Debito&quot;,3,500),
+  (28894115055303983000,860,&quot;04/26&quot;,&quot;10/30&quot;,&quot;Credito&quot;,2,10);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (94895749056212010000,922,&quot;01/22&quot;,&quot;01/32&quot;,&quot;Credito&quot;,2,178),
+  (67246917644804110000,487,&quot;11/22&quot;,&quot;01/31&quot;,&quot;Debito&quot;,2,168),
+  (77898364173250900000,617,&quot;09/22&quot;,&quot;09/32&quot;,&quot;Debito&quot;,3,185),
+  (87389577605194500000,214,&quot;05/25&quot;,&quot;11/28&quot;,&quot;Credito&quot;,3,21),
+  (98972501693493120000,491,&quot;08/24&quot;,&quot;06/31&quot;,&quot;Credito&quot;,2,149),
+  (17046132633720984000,330,&quot;03/22&quot;,&quot;11/29&quot;,&quot;Credito&quot;,3,426),
+  (19040945305839596000,446,&quot;11/26&quot;,&quot;10/31&quot;,&quot;Debito&quot;,2,467),
+  (64369159605104700000,893,&quot;02/24&quot;,&quot;01/30&quot;,&quot;Debito&quot;,2,471),
+  (61452267600479080000,748,&quot;10/22&quot;,&quot;10/32&quot;,&quot;Debito&quot;,2,15),
+  (26229128984229100000,689,&quot;12/25&quot;,&quot;05/30&quot;,&quot;Credito&quot;,3,495);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (30281489087635083000,482,&quot;07/24&quot;,&quot;07/33&quot;,&quot;Credito&quot;,3,145),
+  (74338492854648980000,401,&quot;06/22&quot;,&quot;12/31&quot;,&quot;Debito&quot;,1,40),
+  (49901854787848815000,509,&quot;05/24&quot;,&quot;02/33&quot;,&quot;Credito&quot;,3,438),
+  (84627872083931740000,524,&quot;11/23&quot;,&quot;08/32&quot;,&quot;Credito&quot;,2,24),
+  (23159640498821816000,659,&quot;09/26&quot;,&quot;08/32&quot;,&quot;Credito&quot;,1,323),
+  (97880982801771250000,385,&quot;06/26&quot;,&quot;12/32&quot;,&quot;Debito&quot;,1,453),
+  (43334135894087380000,609,&quot;04/23&quot;,&quot;06/32&quot;,&quot;Credito&quot;,2,381),
+  (73124157207211794000,187,&quot;09/23&quot;,&quot;11/30&quot;,&quot;Credito&quot;,3,237),
+  (63558158746528915000,797,&quot;11/22&quot;,&quot;09/29&quot;,&quot;Debito&quot;,3,40),
+  (97467353340705550000,151,&quot;09/22&quot;,&quot;03/31&quot;,&quot;Debito&quot;,1,289);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (87825651330227520000,530,&quot;01/25&quot;,&quot;07/29&quot;,&quot;Debito&quot;,1,239),
+  (88325092407907240000,474,&quot;02/27&quot;,&quot;06/30&quot;,&quot;Credito&quot;,3,348),
+  (25195178929890130000,981,&quot;12/21&quot;,&quot;08/29&quot;,&quot;Credito&quot;,2,153),
+  (54971604979720490000,743,&quot;01/26&quot;,&quot;07/32&quot;,&quot;Debito&quot;,2,494),
+  (42418648681986154000,507,&quot;10/22&quot;,&quot;11/30&quot;,&quot;Credito&quot;,3,416),
+  (88448840190334060000,746,&quot;06/23&quot;,&quot;11/30&quot;,&quot;Credito&quot;,3,261),
+  (96279239313445900000,981,&quot;02/26&quot;,&quot;07/32&quot;,&quot;Debito&quot;,1,394),
+  (53871836183800816000,617,&quot;11/23&quot;,&quot;11/31&quot;,&quot;Debito&quot;,3,488),
+  (85067904597572530000,978,&quot;02/22&quot;,&quot;08/29&quot;,&quot;Credito&quot;,1,109),
+  (85856141573346840000,381,&quot;10/23&quot;,&quot;09/28&quot;,&quot;Debito&quot;,2,308);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (14769249119212646000,169,&quot;03/22&quot;,&quot;03/31&quot;,&quot;Debito&quot;,1,331),
+  (80907750933558330000,572,&quot;10/25&quot;,&quot;05/32&quot;,&quot;Debito&quot;,1,427),
+  (13156539345495337000,669,&quot;01/27&quot;,&quot;08/30&quot;,&quot;Credito&quot;,2,57),
+  (60165504784599966000,841,&quot;07/27&quot;,&quot;07/30&quot;,&quot;Credito&quot;,3,257),
+  (51003080782251704000,747,&quot;11/23&quot;,&quot;01/31&quot;,&quot;Debito&quot;,3,185),
+  (12901941214812168000,447,&quot;03/26&quot;,&quot;09/31&quot;,&quot;Debito&quot;,2,383),
+  (87094822484651670000,380,&quot;10/26&quot;,&quot;03/33&quot;,&quot;Credito&quot;,2,61),
+  (91705520460485690000,639,&quot;11/22&quot;,&quot;07/33&quot;,&quot;Debito&quot;,2,60),
+  (36330733076275315000,231,&quot;04/27&quot;,&quot;10/31&quot;,&quot;Debito&quot;,1,325),
+  (32141846044428603000,941,&quot;08/21&quot;,&quot;01/31&quot;,&quot;Debito&quot;,1,221);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (68144089541271270000,631,&quot;11/25&quot;,&quot;08/30&quot;,&quot;Credito&quot;,2,479),
+  (92542049783843850000,350,&quot;10/23&quot;,&quot;03/30&quot;,&quot;Credito&quot;,2,160),
+  (30078630908315152000,697,&quot;09/25&quot;,&quot;04/32&quot;,&quot;Debito&quot;,3,212),
+  (52350909581162110000,928,&quot;03/23&quot;,&quot;01/32&quot;,&quot;Credito&quot;,2,412),
+  (24811086168032117000,817,&quot;03/24&quot;,&quot;02/32&quot;,&quot;Credito&quot;,1,488),
+  (36722361819699940000,581,&quot;03/24&quot;,&quot;09/30&quot;,&quot;Debito&quot;,1,396),
+  (83764773630126500000,488,&quot;02/26&quot;,&quot;01/33&quot;,&quot;Credito&quot;,2,465),
+  (84525044682615690000,335,&quot;11/26&quot;,&quot;02/29&quot;,&quot;Credito&quot;,1,360),
+  (97226106999341660000,587,&quot;05/25&quot;,&quot;03/32&quot;,&quot;Debito&quot;,2,423),
+  (94032789159929680000,430,&quot;08/25&quot;,&quot;06/33&quot;,&quot;Credito&quot;,3,425);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (90036001203878580000,772,&quot;05/23&quot;,&quot;05/32&quot;,&quot;Credito&quot;,2,415),
+  (89599216287605460000,790,&quot;06/23&quot;,&quot;12/28&quot;,&quot;Debito&quot;,2,332),
+  (79443118725011930000,372,&quot;03/27&quot;,&quot;05/31&quot;,&quot;Credito&quot;,3,455),
+  (55734674645636325000,959,&quot;11/25&quot;,&quot;08/30&quot;,&quot;Credito&quot;,2,27),
+  (68840841571204590000,626,&quot;01/26&quot;,&quot;08/30&quot;,&quot;Credito&quot;,2,148),
+  (24606571947672805000,506,&quot;09/26&quot;,&quot;04/31&quot;,&quot;Credito&quot;,2,300),
+  (61883774432390590000,934,&quot;09/24&quot;,&quot;06/30&quot;,&quot;Credito&quot;,2,494),
+  (95621353240775790000,749,&quot;02/27&quot;,&quot;11/32&quot;,&quot;Credito&quot;,3,494),
+  (70343021751239840000,353,&quot;02/22&quot;,&quot;08/31&quot;,&quot;Debito&quot;,3,436),
+  (11766923544294558000,137,&quot;02/27&quot;,&quot;12/31&quot;,&quot;Debito&quot;,2,394);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (66924939672290755000,348,&quot;07/26&quot;,&quot;11/30&quot;,&quot;Debito&quot;,2,91),
+  (12124497072117852000,311,&quot;05/23&quot;,&quot;10/31&quot;,&quot;Debito&quot;,3,35),
+  (40885761817764870000,492,&quot;02/27&quot;,&quot;12/32&quot;,&quot;Debito&quot;,1,65),
+  (34671939283887284000,497,&quot;09/22&quot;,&quot;07/31&quot;,&quot;Debito&quot;,1,455),
+  (22865717421084590000,536,&quot;10/25&quot;,&quot;09/32&quot;,&quot;Credito&quot;,2,363),
+  (45739893733771410000,162,&quot;05/24&quot;,&quot;05/32&quot;,&quot;Credito&quot;,2,335),
+  (47187887027778060000,876,&quot;05/24&quot;,&quot;03/29&quot;,&quot;Debito&quot;,1,18),
+  (33047634747943973000,695,&quot;03/26&quot;,&quot;08/31&quot;,&quot;Credito&quot;,1,240),
+  (75593096951935880000,721,&quot;09/23&quot;,&quot;05/31&quot;,&quot;Debito&quot;,3,166),
+  (72101680311786250000,588,&quot;07/23&quot;,&quot;12/28&quot;,&quot;Credito&quot;,2,385);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (98434507290555860000,957,&quot;05/26&quot;,&quot;10/31&quot;,&quot;Debito&quot;,2,400),
+  (65107935366060655000,669,&quot;01/27&quot;,&quot;06/32&quot;,&quot;Credito&quot;,2,130),
+  (79444106268256830000,413,&quot;11/23&quot;,&quot;12/28&quot;,&quot;Credito&quot;,1,129),
+  (61239762297506005000,790,&quot;07/26&quot;,&quot;06/33&quot;,&quot;Debito&quot;,3,429),
+  (29977333724422435000,933,&quot;05/26&quot;,&quot;03/31&quot;,&quot;Credito&quot;,3,42),
+  (66828491043656065000,521,&quot;08/24&quot;,&quot;09/30&quot;,&quot;Credito&quot;,3,36),
+  (47300790747575020000,724,&quot;08/25&quot;,&quot;10/30&quot;,&quot;Debito&quot;,3,55),
+  (92344354400098470000,988,&quot;01/22&quot;,&quot;03/32&quot;,&quot;Credito&quot;,2,209),
+  (80801822860229560000,346,&quot;12/24&quot;,&quot;08/32&quot;,&quot;Debito&quot;,3,430),
+  (33304045714682290000,833,&quot;11/22&quot;,&quot;01/29&quot;,&quot;Debito&quot;,2,113);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (79044912795479240000,785,&quot;01/26&quot;,&quot;08/31&quot;,&quot;Credito&quot;,2,121),
+  (96587121697141010000,974,&quot;11/23&quot;,&quot;10/30&quot;,&quot;Credito&quot;,2,168),
+  (57320020139179380000,773,&quot;03/27&quot;,&quot;08/31&quot;,&quot;Debito&quot;,2,474),
+  (14283546906681184000,272,&quot;09/24&quot;,&quot;05/31&quot;,&quot;Debito&quot;,2,216),
+  (22409948088764432000,255,&quot;11/25&quot;,&quot;03/32&quot;,&quot;Debito&quot;,2,4),
+  (29190160377936790000,346,&quot;01/26&quot;,&quot;11/29&quot;,&quot;Debito&quot;,2,493),
+  (86066592165376260000,519,&quot;03/22&quot;,&quot;04/33&quot;,&quot;Credito&quot;,2,206),
+  (17345788633878819000,868,&quot;10/24&quot;,&quot;07/30&quot;,&quot;Credito&quot;,3,370),
+  (34680949113679962000,865,&quot;07/22&quot;,&quot;07/31&quot;,&quot;Credito&quot;,2,234),
+  (80968259409541230000,182,&quot;10/22&quot;,&quot;03/29&quot;,&quot;Credito&quot;,1,459);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (77995244167069500000,218,&quot;10/24&quot;,&quot;01/33&quot;,&quot;Credito&quot;,3,293),
+  (33099280736631850000,280,&quot;06/25&quot;,&quot;07/33&quot;,&quot;Credito&quot;,2,319),
+  (55728117989005795000,723,&quot;01/26&quot;,&quot;01/29&quot;,&quot;Credito&quot;,3,430),
+  (50904860369522295000,563,&quot;07/26&quot;,&quot;10/29&quot;,&quot;Credito&quot;,2,224),
+  (55442419578816270000,976,&quot;06/23&quot;,&quot;09/31&quot;,&quot;Debito&quot;,2,251),
+  (51746261328190554000,547,&quot;12/23&quot;,&quot;10/29&quot;,&quot;Debito&quot;,2,17),
+  (99483014314775070000,785,&quot;02/23&quot;,&quot;07/33&quot;,&quot;Credito&quot;,1,220),
+  (66826103732187830000,566,&quot;07/26&quot;,&quot;07/30&quot;,&quot;Debito&quot;,3,20),
+  (56968970992605860000,590,&quot;01/23&quot;,&quot;11/29&quot;,&quot;Debito&quot;,2,314),
+  (39180089283175330000,536,&quot;11/24&quot;,&quot;09/29&quot;,&quot;Debito&quot;,2,32);
+INSERT INTO Tarjetas (`Numero`,`CVV`,`Fecha_Emision`,`Fecha_Expiracion`,`Cred_Deb`,`Marca_id`,`Customer_id`)
+VALUES
+  (30511407044442210000,453,&quot;02/23&quot;,&quot;10/31&quot;,&quot;Debito&quot;,1,180),
+  (53864406393159500000,307,&quot;09/23&quot;,&quot;04/29&quot;,&quot;Credito&quot;,3,375),
+  (76511775704311320000,530,&quot;08/26&quot;,&quot;01/29&quot;,&quot;Debito&quot;,3,373),
+  (60028495673680445000,979,&quot;09/22&quot;,&quot;07/30&quot;,&quot;Credito&quot;,2,415),
+  (11035811428204093000,860,&quot;11/26&quot;,&quot;03/31&quot;,&quot;Debito&quot;,1,102),
+  (86148674753706080000,699,&quot;01/24&quot;,&quot;10/30&quot;,&quot;Credito&quot;,3,368),
+  (53611451097048330000,324,&quot;10/26&quot;,&quot;08/31&quot;,&quot;Debito&quot;,2,34),
+  (83032339766450420000,785,&quot;02/26&quot;,&quot;06/30&quot;,&quot;Credito&quot;,3,240),
+  (33472352504724283000,552,&quot;07/22&quot;,&quot;10/30&quot;,&quot;Credito&quot;,2,499),
+  (54777278142967235000,511,&quot;03/25&quot;,&quot;04/29&quot;,&quot;Debito&quot;,2,273);
+
+
+CREATE TABLE Direcciones(
+Direccion_id INTEGER PRIMARY KEY,
+Calle TEXT NOT NULL,
+Numero INTEGER NOT NULL,
+Ciudad TEXT NOT NULL,
+Provincia TEXT NOT NULL,
+Pais TEXT NOT NULL,
+Branch_id INTEGER,
+Employee_id INTEGER NOT NULL,
+Customer_id INTEGER NOT NULL,
+FOREIGN KEY (Branch_id)
+	REFERENCES sucursal(branch_id),
+FOREIGN KEY (Employee_id)
+	REFERENCES empleado (employee_id),
+FOREIGN KEY (Customer_id)
+	REFERENCES cliente (customer_id)
+);
+
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Adele&quot;,338,&quot;Berlin&quot;,&quot;Jaime&quot;,&quot;Spain&quot;,38,133),
+  (&quot;Rhonda&quot;,1639,&quot;Baracaldo&quot;,&quot;Ora&quot;,&quot;Spain&quot;,192,123),
+  (&quot;Alfonso&quot;,2363,&quot;Donosti&quot;,&quot;Hedda&quot;,&quot;Germany&quot;,358,300),
+  (&quot;Lana&quot;,980,&quot;Cáceres&quot;,&quot;Justina&quot;,&quot;Spain&quot;,413,259),
+  (&quot;Marshall&quot;,2711,&quot;Berlin&quot;,&quot;Brenden&quot;,&quot;Spain&quot;,456,430),
+  (&quot;Timon&quot;,3650,&quot;Goslar&quot;,&quot;Summer&quot;,&quot;Germany&quot;,309,84),
+  (&quot;Camilla&quot;,960,&quot;Forges&quot;,&quot;Demetrius&quot;,&quot;Belgium&quot;,435,441),
+  (&quot;Xanthus&quot;,4878,&quot;Gasteiz&quot;,&quot;Noelle&quot;,&quot;Belgium&quot;,292,346),
+  (&quot;Quamar&quot;,1925,&quot;Taunusstein&quot;,&quot;Glenna&quot;,&quot;Germany&quot;,362,324),
+  (&quot;Basil&quot;,161,&quot;Münster&quot;,&quot;Dean&quot;,&quot;Belgium&quot;,399,430);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Dustin&quot;,4280,&quot;Hamburg&quot;,&quot;Fletcher&quot;,&quot;Spain&quot;,17,335),
+  (&quot;Lisandra&quot;,1506,&quot;Germersheim&quot;,&quot;Mariko&quot;,&quot;Spain&quot;,462,233),
+  (&quot;Jacqueline&quot;,2657,&quot;Haren&quot;,&quot;Neville&quot;,&quot;Belgium&quot;,491,74),
+  (&quot;Maile&quot;,1974,&quot;Santander&quot;,&quot;Paula&quot;,&quot;Germany&quot;,241,79),
+  (&quot;Kennan&quot;,4411,&quot;Paderborn&quot;,&quot;Hoyt&quot;,&quot;Spain&quot;,136,200),
+  (&quot;Leah&quot;,4374,&quot;Merksplas&quot;,&quot;Desiree&quot;,&quot;Belgium&quot;,498,239),
+  (&quot;Vernon&quot;,3086,&quot;Ceuta&quot;,&quot;Jennifer&quot;,&quot;Germany&quot;,378,261),
+  (&quot;Dacey&quot;,607,&quot;Lathuy&quot;,&quot;Alec&quot;,&quot;Belgium&quot;,164,289),
+  (&quot;Nichole&quot;,4826,&quot;Ganshoren&quot;,&quot;Raya&quot;,&quot;Spain&quot;,291,138),
+  (&quot;Vincent&quot;,3362,&quot;Castelló&quot;,&quot;Carla&quot;,&quot;Spain&quot;,398,89);
+INSERT INTO Direcciones(`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Bethany&quot;,4435,&quot;Gelsenkirchen&quot;,&quot;Price&quot;,&quot;Belgium&quot;,425,18),
+  (&quot;Brenda&quot;,3030,&quot;Speyer&quot;,&quot;Rooney&quot;,&quot;Spain&quot;,214,366),
+  (&quot;Delilah&quot;,1176,&quot;Jumet&quot;,&quot;Risa&quot;,&quot;Belgium&quot;,106,260),
+  (&quot;Molly&quot;,4664,&quot;Bremen&quot;,&quot;Cooper&quot;,&quot;Spain&quot;,173,175),
+  (&quot;Jarrod&quot;,4350,&quot;Riesa&quot;,&quot;Rigel&quot;,&quot;Belgium&quot;,139,475),
+  (&quot;Adrian&quot;,1458,&quot;Darmstadt&quot;,&quot;Nita&quot;,&quot;Germany&quot;,154,2),
+  (&quot;Solomon&quot;,1622,&quot;Melilla&quot;,&quot;Susan&quot;,&quot;Spain&quot;,328,210),
+  (&quot;Quynn&quot;,3435,&quot;Logroño&quot;,&quot;Oscar&quot;,&quot;Belgium&quot;,348,61),
+  (&quot;Dorian&quot;,3738,&quot;Essen&quot;,&quot;Lawrence&quot;,&quot;Belgium&quot;,412,352),
+  (&quot;Yardley&quot;,4529,&quot;Oldenburg&quot;,&quot;Lev&quot;,&quot;Belgium&quot;,289,164);
+INSERT INTO Direcciones(`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Howard&quot;,1637,&quot;Guadalajara&quot;,&quot;Declan&quot;,&quot;Spain&quot;,417,318),
+  (&quot;Gisela&quot;,842,&quot;Saint-Servais&quot;,&quot;Irene&quot;,&quot;Spain&quot;,108,438),
+  (&quot;Tate&quot;,730,&quot;Zittau&quot;,&quot;Adrian&quot;,&quot;Germany&quot;,467,482),
+  (&quot;Montana&quot;,3724,&quot;Gijón&quot;,&quot;Gary&quot;,&quot;Belgium&quot;,335,345),
+  (&quot;Summer&quot;,326,&quot;Habergy&quot;,&quot;Joel&quot;,&quot;Belgium&quot;,483,382),
+  (&quot;Felix&quot;,757,&quot;Duffel&quot;,&quot;Audrey&quot;,&quot;Spain&quot;,85,334),
+  (&quot;Derek&quot;,4255,&quot;Boignee&quot;,&quot;Shad&quot;,&quot;Belgium&quot;,326,207),
+  (&quot;Rana&quot;,1150,&quot;Wolfsburg&quot;,&quot;Marny&quot;,&quot;Spain&quot;,191,99),
+  (&quot;Marcia&quot;,2238,&quot;Leganés&quot;,&quot;Ivor&quot;,&quot;Germany&quot;,111,93),
+  (&quot;Anjolie&quot;,4126,&quot;Hamme&quot;,&quot;Dante&quot;,&quot;Spain&quot;,349,284);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Tatum&quot;,4628,&quot;Keiem&quot;,&quot;Amos&quot;,&quot;Belgium&quot;,387,27),
+  (&quot;Maia&quot;,1494,&quot;Santa Coloma de Gramenet&quot;,&quot;Emerald&quot;,&quot;Spain&quot;,188,38),
+  (&quot;Noelle&quot;,1650,&quot;Ludwigshafen&quot;,&quot;Jared&quot;,&quot;Belgium&quot;,446,295),
+  (&quot;Ava&quot;,4412,&quot;Aschaffenburg&quot;,&quot;Barry&quot;,&quot;Germany&quot;,180,390),
+  (&quot;Ulric&quot;,3773,&quot;Bergen&quot;,&quot;Wylie&quot;,&quot;Belgium&quot;,242,182),
+  (&quot;Ian&quot;,4039,&quot;Orbais&quot;,&quot;Asher&quot;,&quot;Germany&quot;,82,270),
+  (&quot;Rajah&quot;,4794,&quot;Hannover&quot;,&quot;Perry&quot;,&quot;Spain&quot;,125,12),
+  (&quot;Daryl&quot;,3596,&quot;Elsene&quot;,&quot;Rebekah&quot;,&quot;Germany&quot;,335,306),
+  (&quot;Zahir&quot;,1837,&quot;Rosenheim&quot;,&quot;Bo&quot;,&quot;Germany&quot;,324,496),
+  (&quot;Galena&quot;,1530,&quot;Toledo&quot;,&quot;Dale&quot;,&quot;Spain&quot;,444,61);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Thor&quot;,1151,&quot;Sevilla&quot;,&quot;Mechelle&quot;,&quot;Germany&quot;,375,81),
+  (&quot;Sara&quot;,2822,&quot;Granada&quot;,&quot;Vanna&quot;,&quot;Belgium&quot;,24,312),
+  (&quot;Signe&quot;,2480,&quot;Oviedo&quot;,&quot;Audrey&quot;,&quot;Belgium&quot;,225,173),
+  (&quot;Norman&quot;,4004,&quot;Baracaldo&quot;,&quot;Magee&quot;,&quot;Belgium&quot;,439,402),
+  (&quot;May&quot;,3954,&quot;Halberstadt&quot;,&quot;Mira&quot;,&quot;Germany&quot;,353,482),
+  (&quot;Noah&quot;,1045,&quot;Wismar&quot;,&quot;Gavin&quot;,&quot;Belgium&quot;,130,335),
+  (&quot;Ayanna&quot;,1424,&quot;Jemeppe-sur-Sambre&quot;,&quot;Nathaniel&quot;,&quot;Germany&quot;,248,345),
+  (&quot;Inga&quot;,4517,&quot;Gijón&quot;,&quot;Colton&quot;,&quot;Spain&quot;,67,266),
+  (&quot;Lani&quot;,3793,&quot;Sulzbach&quot;,&quot;Xena&quot;,&quot;Germany&quot;,137,142),
+  (&quot;Eve&quot;,4471,&quot;Gent&quot;,&quot;Candace&quot;,&quot;Spain&quot;,9,20);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Adrian&quot;,1626,&quot;Logroño&quot;,&quot;Jerry&quot;,&quot;Germany&quot;,198,110),
+  (&quot;Patrick&quot;,4171,&quot;Vigo&quot;,&quot;Ursula&quot;,&quot;Belgium&quot;,232,429),
+  (&quot;Summer&quot;,4955,&quot;Buken&quot;,&quot;Martina&quot;,&quot;Spain&quot;,371,373),
+  (&quot;Rhiannon&quot;,4491,&quot;Delitzsch&quot;,&quot;Brenda&quot;,&quot;Belgium&quot;,129,196),
+  (&quot;Bertha&quot;,1526,&quot;Brussel&quot;,&quot;Kenyon&quot;,&quot;Germany&quot;,103,205),
+  (&quot;Octavia&quot;,2395,&quot;Gijón&quot;,&quot;Cameron&quot;,&quot;Belgium&quot;,183,11),
+  (&quot;Sean&quot;,1840,&quot;Strausberg&quot;,&quot;Brody&quot;,&quot;Germany&quot;,385,23),
+  (&quot;Nathaniel&quot;,3916,&quot;Melilla&quot;,&quot;Nissim&quot;,&quot;Belgium&quot;,74,194),
+  (&quot;Yuri&quot;,2191,&quot;Bilbo&quot;,&quot;Keaton&quot;,&quot;Spain&quot;,441,372),
+  (&quot;Flynn&quot;,3599,&quot;Cognelee&quot;,&quot;Otto&quot;,&quot;Spain&quot;,363,46);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Kylee&quot;,804,&quot;Arendonk&quot;,&quot;Lucas&quot;,&quot;Belgium&quot;,60,316),
+  (&quot;Wyatt&quot;,2550,&quot;Hannche&quot;,&quot;Herrod&quot;,&quot;Spain&quot;,345,19),
+  (&quot;Damon&quot;,4406,&quot;Groß-Gerau&quot;,&quot;Margaret&quot;,&quot;Germany&quot;,152,55),
+  (&quot;Claudia&quot;,663,&quot;Pinneberg&quot;,&quot;Minerva&quot;,&quot;Belgium&quot;,207,33),
+  (&quot;Aristotle&quot;,3092,&quot;Logroño&quot;,&quot;Sophia&quot;,&quot;Spain&quot;,60,391),
+  (&quot;Theodore&quot;,3489,&quot;Logroño&quot;,&quot;Rhoda&quot;,&quot;Spain&quot;,87,232),
+  (&quot;Amal&quot;,2701,&quot;Rüsselsheim&quot;,&quot;Florence&quot;,&quot;Germany&quot;,312,478),
+  (&quot;Karina&quot;,513,&quot;Neuwied&quot;,&quot;Bree&quot;,&quot;Germany&quot;,202,386),
+  (&quot;Ivor&quot;,685,&quot;Ganshoren&quot;,&quot;Justin&quot;,&quot;Belgium&quot;,321,3),
+  (&quot;Jescie&quot;,2751,&quot;Madrid&quot;,&quot;Kimberly&quot;,&quot;Belgium&quot;,115,211);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Marny&quot;,1517,&quot;Arsimont&quot;,&quot;Hedda&quot;,&quot;Belgium&quot;,425,475),
+  (&quot;Kalia&quot;,675,&quot;Teruel&quot;,&quot;Porter&quot;,&quot;Belgium&quot;,238,146),
+  (&quot;Scarlet&quot;,2334,&quot;MalŽves-Sainte-Marie-Wastines&quot;,&quot;Frances&quot;,&quot;Belgium&quot;,150,25),
+  (&quot;Kathleen&quot;,3166,&quot;Pirmasens&quot;,&quot;Davis&quot;,&quot;Germany&quot;,264,78),
+  (&quot;Samuel&quot;,1949,&quot;Bonneville&quot;,&quot;Honorato&quot;,&quot;Belgium&quot;,100,189),
+  (&quot;Honorato&quot;,776,&quot;Ciudad Real&quot;,&quot;Jordan&quot;,&quot;Germany&quot;,117,250),
+  (&quot;Autumn&quot;,1187,&quot;Comblain-Fairon&quot;,&quot;Moses&quot;,&quot;Belgium&quot;,284,34),
+  (&quot;Yvette&quot;,4585,&quot;Cartagena&quot;,&quot;Gail&quot;,&quot;Belgium&quot;,228,198),
+  (&quot;Salvador&quot;,4257,&quot;Logroño&quot;,&quot;Gregory&quot;,&quot;Spain&quot;,402,457),
+  (&quot;Lewis&quot;,873,&quot;Wadgassen&quot;,&quot;Leah&quot;,&quot;Germany&quot;,188,4);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Chloe&quot;,4934,&quot;Palma de Mallorca&quot;,&quot;Joelle&quot;,&quot;Belgium&quot;,138,178),
+  (&quot;Cole&quot;,3045,&quot;Arendonk&quot;,&quot;Porter&quot;,&quot;Germany&quot;,126,454),
+  (&quot;Tana&quot;,709,&quot;Henstedt-Ulzburg&quot;,&quot;Ila&quot;,&quot;Spain&quot;,128,20),
+  (&quot;Daphne&quot;,1770,&quot;Palencia&quot;,&quot;Kelsey&quot;,&quot;Spain&quot;,260,150),
+  (&quot;Brent&quot;,3605,&quot;Ceuta&quot;,&quot;Ginger&quot;,&quot;Belgium&quot;,448,312),
+  (&quot;Jerry&quot;,1399,&quot;Marburg&quot;,&quot;Maia&quot;,&quot;Spain&quot;,16,192),
+  (&quot;Tad&quot;,306,&quot;Rendsburg&quot;,&quot;Rosalyn&quot;,&quot;Spain&quot;,264,238),
+  (&quot;Christian&quot;,2738,&quot;Palma de Mallorca&quot;,&quot;Gary&quot;,&quot;Germany&quot;,119,187),
+  (&quot;Xenos&quot;,3623,&quot;Melilla&quot;,&quot;Cecilia&quot;,&quot;Germany&quot;,282,205),
+  (&quot;Medge&quot;,4577,&quot;Idar-Oberstei&quot;,&quot;Lenore&quot;,&quot;Belgium&quot;,469,66);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Elton&quot;,4733,&quot;Albacete&quot;,&quot;Quinn&quot;,&quot;Germany&quot;,353,124),
+  (&quot;Lyle&quot;,4596,&quot;Tarragona&quot;,&quot;Breanna&quot;,&quot;Belgium&quot;,342,361),
+  (&quot;Kareem&quot;,3189,&quot;Loppem&quot;,&quot;Ariel&quot;,&quot;Belgium&quot;,130,478),
+  (&quot;Silas&quot;,3988,&quot;Massemen&quot;,&quot;Abdul&quot;,&quot;Germany&quot;,196,44),
+  (&quot;Kane&quot;,1038,&quot;Neustrelitz&quot;,&quot;Lael&quot;,&quot;Germany&quot;,168,181),
+  (&quot;Shad&quot;,4917,&quot;Elversele&quot;,&quot;Hedy&quot;,&quot;Belgium&quot;,348,455),
+  (&quot;Derek&quot;,4372,&quot;Nieuwmunster&quot;,&quot;Jackson&quot;,&quot;Germany&quot;,236,116),
+  (&quot;Adria&quot;,3396,&quot;Hof&quot;,&quot;Madison&quot;,&quot;Spain&quot;,216,189),
+  (&quot;Daphne&quot;,1828,&quot;Santander&quot;,&quot;Thane&quot;,&quot;Germany&quot;,136,290),
+  (&quot;Yoshi&quot;,4219,&quot;Palma de Mallorca&quot;,&quot;Hayden&quot;,&quot;Spain&quot;,167,175);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Clarke&quot;,464,&quot;Braives&quot;,&quot;Salvador&quot;,&quot;Belgium&quot;,188,143),
+  (&quot;Maxine&quot;,3483,&quot;Sankt Wendel&quot;,&quot;Roth&quot;,&quot;Belgium&quot;,363,425),
+  (&quot;Harding&quot;,115,&quot;Wismar&quot;,&quot;Price&quot;,&quot;Spain&quot;,422,180),
+  (&quot;Tobias&quot;,3180,&quot;Parla&quot;,&quot;Macaulay&quot;,&quot;Belgium&quot;,18,38),
+  (&quot;Arsenio&quot;,181,&quot;Bad Kreuznach&quot;,&quot;Hiram&quot;,&quot;Germany&quot;,96,313),
+  (&quot;Ariana&quot;,4739,&quot;Radebeul&quot;,&quot;Pascale&quot;,&quot;Belgium&quot;,127,4),
+  (&quot;Jamal&quot;,715,&quot;Riesa&quot;,&quot;Bianca&quot;,&quot;Belgium&quot;,416,63),
+  (&quot;Jasper&quot;,2435,&quot;Nodebais&quot;,&quot;Gail&quot;,&quot;Belgium&quot;,38,224),
+  (&quot;Abel&quot;,3187,&quot;Palma de Mallorca&quot;,&quot;Colt&quot;,&quot;Spain&quot;,317,13),
+  (&quot;Irene&quot;,2255,&quot;Denderwindeke&quot;,&quot;Gage&quot;,&quot;Spain&quot;,66,389);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Haley&quot;,434,&quot;Oviedo&quot;,&quot;Hyatt&quot;,&quot;Belgium&quot;,6,367),
+  (&quot;Eaton&quot;,3439,&quot;Valéncia&quot;,&quot;Louis&quot;,&quot;Germany&quot;,331,310),
+  (&quot;Scott&quot;,3957,&quot;Rollegem&quot;,&quot;Aristotle&quot;,&quot;Belgium&quot;,201,97),
+  (&quot;Valentine&quot;,2394,&quot;Hamburg&quot;,&quot;Armand&quot;,&quot;Germany&quot;,120,107),
+  (&quot;Nigel&quot;,2101,&quot;Cartagena&quot;,&quot;Rana&quot;,&quot;Belgium&quot;,413,464),
+  (&quot;Sybil&quot;,4915,&quot;Mornimont&quot;,&quot;Clio&quot;,&quot;Spain&quot;,435,388),
+  (&quot;Arthur&quot;,4267,&quot;Genappe&quot;,&quot;Daphne&quot;,&quot;Belgium&quot;,362,485),
+  (&quot;Leroy&quot;,411,&quot;Vigo&quot;,&quot;Jessamine&quot;,&quot;Spain&quot;,76,252),
+  (&quot;Tallulah&quot;,991,&quot;Tillet&quot;,&quot;Rahim&quot;,&quot;Germany&quot;,111,219),
+  (&quot;Cullen&quot;,829,&quot;Schwerin&quot;,&quot;Vladimir&quot;,&quot;Spain&quot;,284,247);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Yvette&quot;,3144,&quot;Henstedt-Ulzburg&quot;,&quot;Jakeem&quot;,&quot;Belgium&quot;,215,442),
+  (&quot;Sasha&quot;,4938,&quot;Gaasbeek&quot;,&quot;Keegan&quot;,&quot;Germany&quot;,425,495),
+  (&quot;Guinevere&quot;,3932,&quot;Algeciras&quot;,&quot;Forrest&quot;,&quot;Belgium&quot;,93,180),
+  (&quot;Kelly&quot;,1211,&quot;Gasteiz&quot;,&quot;Jameson&quot;,&quot;Belgium&quot;,6,219),
+  (&quot;Hedley&quot;,1456,&quot;Palma de Mallorca&quot;,&quot;Leigh&quot;,&quot;Germany&quot;,404,103),
+  (&quot;Whilemina&quot;,180,&quot;Palma de Mallorca&quot;,&quot;Thaddeus&quot;,&quot;Spain&quot;,24,80),
+  (&quot;Chiquita&quot;,370,&quot;Berlin&quot;,&quot;April&quot;,&quot;Belgium&quot;,157,102),
+  (&quot;Miriam&quot;,1249,&quot;Juseret&quot;,&quot;Addison&quot;,&quot;Germany&quot;,271,140),
+  (&quot;Burton&quot;,4076,&quot;Donosti&quot;,&quot;Ivan&quot;,&quot;Germany&quot;,61,256),
+  (&quot;Melyssa&quot;,3504,&quot;Pinneberg&quot;,&quot;Paloma&quot;,&quot;Germany&quot;,204,185);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Ifeoma&quot;,641,&quot;Perk&quot;,&quot;Amela&quot;,&quot;Belgium&quot;,135,492),
+  (&quot;Phelan&quot;,3866,&quot;Ravensburg&quot;,&quot;Lacey&quot;,&quot;Belgium&quot;,496,109),
+  (&quot;Zane&quot;,316,&quot;Logroño&quot;,&quot;Cole&quot;,&quot;Belgium&quot;,406,470),
+  (&quot;Bethany&quot;,1261,&quot;Pamplona&quot;,&quot;Meghan&quot;,&quot;Belgium&quot;,436,454),
+  (&quot;Abraham&quot;,4309,&quot;Bremen&quot;,&quot;Alec&quot;,&quot;Spain&quot;,279,106),
+  (&quot;Larissa&quot;,757,&quot;Pamplona&quot;,&quot;Tamara&quot;,&quot;Belgium&quot;,127,72),
+  (&quot;Victor&quot;,563,&quot;Gooik&quot;,&quot;Rhiannon&quot;,&quot;Spain&quot;,44,214),
+  (&quot;Kylan&quot;,2774,&quot;Köthen&quot;,&quot;India&quot;,&quot;Germany&quot;,204,227),
+  (&quot;Justine&quot;,2674,&quot;Badajoz&quot;,&quot;Sade&quot;,&quot;Belgium&quot;,46,85),
+  (&quot;Ursula&quot;,4822,&quot;Nalinnes&quot;,&quot;Abigail&quot;,&quot;Germany&quot;,418,143);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Shelby&quot;,3567,&quot;Palma de Mallorca&quot;,&quot;Amos&quot;,&quot;Spain&quot;,65,40),
+  (&quot;Mohammad&quot;,596,&quot;Berlin&quot;,&quot;May&quot;,&quot;Spain&quot;,58,24),
+  (&quot;Berk&quot;,3102,&quot;Elingen&quot;,&quot;Preston&quot;,&quot;Belgium&quot;,309,363),
+  (&quot;Ruth&quot;,840,&quot;Palma de Mallorca&quot;,&quot;Jade&quot;,&quot;Belgium&quot;,17,104),
+  (&quot;Farrah&quot;,4949,&quot;Bergisch Gladbach&quot;,&quot;Stephen&quot;,&quot;Germany&quot;,433,469),
+  (&quot;Isaiah&quot;,4481,&quot;Fulda&quot;,&quot;Valentine&quot;,&quot;Belgium&quot;,35,429),
+  (&quot;Hanae&quot;,2973,&quot;Beuzet&quot;,&quot;Reagan&quot;,&quot;Germany&quot;,93,442),
+  (&quot;Hedley&quot;,993,&quot;Mont-Saint-Guibert&quot;,&quot;Jameson&quot;,&quot;Germany&quot;,448,446),
+  (&quot;MacKensie&quot;,342,&quot;Bayreuth&quot;,&quot;Eliana&quot;,&quot;Belgium&quot;,451,30),
+  (&quot;Jocelyn&quot;,1609,&quot;Frankfurt&quot;,&quot;Shelby&quot;,&quot;Belgium&quot;,352,142);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Kevyn&quot;,1678,&quot;Booischot&quot;,&quot;Natalie&quot;,&quot;Germany&quot;,26,27),
+  (&quot;Charles&quot;,3267,&quot;Rizes&quot;,&quot;Haley&quot;,&quot;Spain&quot;,101,58),
+  (&quot;Candace&quot;,2578,&quot;Ceuta&quot;,&quot;Chelsea&quot;,&quot;Spain&quot;,212,151),
+  (&quot;Miranda&quot;,3291,&quot;Ahrensburg&quot;,&quot;Quentin&quot;,&quot;Belgium&quot;,323,174),
+  (&quot;Neville&quot;,3236,&quot;Wandlitz&quot;,&quot;Donovan&quot;,&quot;Belgium&quot;,405,93),
+  (&quot;Anthony&quot;,3228,&quot;Cras-Avernas&quot;,&quot;Nayda&quot;,&quot;Belgium&quot;,285,152),
+  (&quot;Brian&quot;,239,&quot;Kaiserslauter&quot;,&quot;Dorian&quot;,&quot;Germany&quot;,137,452),
+  (&quot;Chaney&quot;,2518,&quot;Córdoba&quot;,&quot;Baker&quot;,&quot;Belgium&quot;,337,322),
+  (&quot;Shana&quot;,599,&quot;Ceuta&quot;,&quot;Yvonne&quot;,&quot;Spain&quot;,196,3),
+  (&quot;Stacey&quot;,1529,&quot;Pamplona&quot;,&quot;Drake&quot;,&quot;Belgium&quot;,314,47);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Quemby&quot;,1943,&quot;Grimma&quot;,&quot;Liberty&quot;,&quot;Spain&quot;,431,213),
+  (&quot;Haviva&quot;,4488,&quot;Monstreux&quot;,&quot;Travis&quot;,&quot;Belgium&quot;,239,500),
+  (&quot;Oleg&quot;,2666,&quot;Machelen&quot;,&quot;Claire&quot;,&quot;Belgium&quot;,251,48),
+  (&quot;Slade&quot;,2494,&quot;Pamplona&quot;,&quot;Madeson&quot;,&quot;Spain&quot;,103,335),
+  (&quot;Rhona&quot;,4248,&quot;Berlin&quot;,&quot;Angela&quot;,&quot;Belgium&quot;,293,234),
+  (&quot;Timothy&quot;,1414,&quot;Bayreuth&quot;,&quot;Ori&quot;,&quot;Belgium&quot;,191,317),
+  (&quot;Alvin&quot;,918,&quot;Las Palmas&quot;,&quot;Aretha&quot;,&quot;Germany&quot;,430,409),
+  (&quot;Carla&quot;,1647,&quot;Cuxhaven&quot;,&quot;Forrest&quot;,&quot;Germany&quot;,201,104),
+  (&quot;Rafael&quot;,3956,&quot;Santa Coloma de Gramenet&quot;,&quot;Noah&quot;,&quot;Germany&quot;,230,252),
+  (&quot;Paula&quot;,3132,&quot;Lavoir&quot;,&quot;Carl&quot;,&quot;Spain&quot;,122,84);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Daniel&quot;,4795,&quot;Soria&quot;,&quot;Uma&quot;,&quot;Spain&quot;,262,74),
+  (&quot;Lydia&quot;,4731,&quot;Zaragoza&quot;,&quot;Rahim&quot;,&quot;Germany&quot;,275,90),
+  (&quot;Devin&quot;,3778,&quot;Torrevieja&quot;,&quot;Paul&quot;,&quot;Spain&quot;,245,360),
+  (&quot;Elijah&quot;,2667,&quot;Logroño&quot;,&quot;Echo&quot;,&quot;Germany&quot;,96,118),
+  (&quot;Finn&quot;,3424,&quot;A Coruña&quot;,&quot;Tobias&quot;,&quot;Belgium&quot;,138,65),
+  (&quot;Boris&quot;,3185,&quot;Elx&quot;,&quot;Zephania&quot;,&quot;Spain&quot;,107,178),
+  (&quot;Harper&quot;,882,&quot;Salamanca&quot;,&quot;Maryam&quot;,&quot;Belgium&quot;,402,18),
+  (&quot;Dustin&quot;,648,&quot;Vorst&quot;,&quot;Barry&quot;,&quot;Germany&quot;,363,227),
+  (&quot;Melissa&quot;,3044,&quot;Bergen&quot;,&quot;Lewis&quot;,&quot;Spain&quot;,44,341),
+  (&quot;Jonah&quot;,1812,&quot;Melilla&quot;,&quot;Wesley&quot;,&quot;Germany&quot;,364,62);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Brooke&quot;,4895,&quot;Telde&quot;,&quot;Ira&quot;,&quot;Belgium&quot;,93,286),
+  (&quot;Jamal&quot;,1076,&quot;Berlin&quot;,&quot;Anthony&quot;,&quot;Germany&quot;,315,446),
+  (&quot;Wade&quot;,1424,&quot;Deurne&quot;,&quot;Reuben&quot;,&quot;Belgium&quot;,181,457),
+  (&quot;Cally&quot;,2000,&quot;Logroño&quot;,&quot;Jerry&quot;,&quot;Spain&quot;,492,199),
+  (&quot;Leandra&quot;,4989,&quot;Almería&quot;,&quot;Dexter&quot;,&quot;Germany&quot;,376,492),
+  (&quot;Sonia&quot;,4714,&quot;Peine&quot;,&quot;Wynne&quot;,&quot;Spain&quot;,213,116),
+  (&quot;Kyle&quot;,4849,&quot;Dudzele&quot;,&quot;Frances&quot;,&quot;Germany&quot;,77,110),
+  (&quot;Melanie&quot;,4740,&quot;Haren&quot;,&quot;Lucian&quot;,&quot;Germany&quot;,30,215),
+  (&quot;Bree&quot;,4472,&quot;Gelsenkirchen&quot;,&quot;Catherine&quot;,&quot;Spain&quot;,112,183),
+  (&quot;Carson&quot;,4213,&quot;Kontich&quot;,&quot;Shea&quot;,&quot;Germany&quot;,164,287);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Yoshi&quot;,1544,&quot;Magdeburg&quot;,&quot;Colette&quot;,&quot;Spain&quot;,74,162),
+  (&quot;Desiree&quot;,1583,&quot;Valéncia&quot;,&quot;Nero&quot;,&quot;Belgium&quot;,111,42),
+  (&quot;Maile&quot;,1616,&quot;Grembergen&quot;,&quot;Hashim&quot;,&quot;Belgium&quot;,275,366),
+  (&quot;Martina&quot;,3692,&quot;Pfungstadt&quot;,&quot;Lysandra&quot;,&quot;Germany&quot;,477,241),
+  (&quot;Cyrus&quot;,1872,&quot;Berlin&quot;,&quot;Farrah&quot;,&quot;Belgium&quot;,142,267),
+  (&quot;Deanna&quot;,3133,&quot;Ceuta&quot;,&quot;Justin&quot;,&quot;Belgium&quot;,117,216),
+  (&quot;Lavinia&quot;,1864,&quot;Oviedo&quot;,&quot;Jordan&quot;,&quot;Belgium&quot;,310,6),
+  (&quot;Freya&quot;,1911,&quot;Hagen&quot;,&quot;Zenia&quot;,&quot;Belgium&quot;,135,68),
+  (&quot;Sebastian&quot;,742,&quot;Cáceres&quot;,&quot;Jordan&quot;,&quot;Belgium&quot;,190,85),
+  (&quot;Cathleen&quot;,4334,&quot;Landau&quot;,&quot;Calvin&quot;,&quot;Spain&quot;,235,348);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Kelly&quot;,1528,&quot;Melilla&quot;,&quot;Fulton&quot;,&quot;Belgium&quot;,129,30),
+  (&quot;Carson&quot;,1544,&quot;Ham-sur-Sambre&quot;,&quot;Alexis&quot;,&quot;Spain&quot;,197,115),
+  (&quot;Kadeem&quot;,962,&quot;Ciudad Real&quot;,&quot;Cecilia&quot;,&quot;Belgium&quot;,291,290),
+  (&quot;Louis&quot;,1079,&quot;Berlin&quot;,&quot;Uta&quot;,&quot;Belgium&quot;,341,329),
+  (&quot;Omar&quot;,4257,&quot;Völklingen&quot;,&quot;Hoyt&quot;,&quot;Germany&quot;,229,496),
+  (&quot;Herrod&quot;,965,&quot;Sankt Ingbert&quot;,&quot;Chloe&quot;,&quot;Spain&quot;,378,343),
+  (&quot;Jeanette&quot;,3554,&quot;Merseburg&quot;,&quot;Ursula&quot;,&quot;Spain&quot;,309,464),
+  (&quot;Raya&quot;,875,&quot;Pamplona&quot;,&quot;Zeph&quot;,&quot;Belgium&quot;,433,408),
+  (&quot;Barry&quot;,410,&quot;Güstrow&quot;,&quot;Jamal&quot;,&quot;Belgium&quot;,247,195),
+  (&quot;Fletcher&quot;,3946,&quot;Louvain-la-Neuve&quot;,&quot;Lacey&quot;,&quot;Spain&quot;,393,128);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Shaeleigh&quot;,4641,&quot;Garbsen&quot;,&quot;Ignatius&quot;,&quot;Belgium&quot;,285,457),
+  (&quot;Steel&quot;,1409,&quot;Lebbeke&quot;,&quot;Mariam&quot;,&quot;Germany&quot;,124,136),
+  (&quot;Illiana&quot;,2263,&quot;Kobbegem&quot;,&quot;Jonah&quot;,&quot;Spain&quot;,241,321),
+  (&quot;Beck&quot;,2054,&quot;CŽroux-Mousty&quot;,&quot;Zelda&quot;,&quot;Spain&quot;,39,281),
+  (&quot;Ira&quot;,1610,&quot;Jerez de la Frontera&quot;,&quot;Cherokee&quot;,&quot;Germany&quot;,262,349),
+  (&quot;Lucy&quot;,1652,&quot;Logroño&quot;,&quot;Davis&quot;,&quot;Germany&quot;,113,434),
+  (&quot;Oprah&quot;,3863,&quot;Tourinnes-la-Grosse&quot;,&quot;Noelle&quot;,&quot;Germany&quot;,233,215),
+  (&quot;Bruce&quot;,2925,&quot;Zaragoza&quot;,&quot;Jordan&quot;,&quot;Germany&quot;,380,448),
+  (&quot;Clinton&quot;,3570,&quot;Bremen&quot;,&quot;Christopher&quot;,&quot;Spain&quot;,100,442),
+  (&quot;Kimberley&quot;,4926,&quot;Booischot&quot;,&quot;Fulton&quot;,&quot;Belgium&quot;,238,246);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Chaim&quot;,3659,&quot;RosiŽres&quot;,&quot;Cyrus&quot;,&quot;Germany&quot;,253,101),
+  (&quot;Baker&quot;,4646,&quot;Melilla&quot;,&quot;Cyrus&quot;,&quot;Spain&quot;,51,371),
+  (&quot;Carson&quot;,1271,&quot;Incourt&quot;,&quot;Clinton&quot;,&quot;Spain&quot;,77,129),
+  (&quot;Colt&quot;,2067,&quot;Retie&quot;,&quot;Porter&quot;,&quot;Germany&quot;,115,386),
+  (&quot;Herman&quot;,2354,&quot;Waiblingen&quot;,&quot;Ayanna&quot;,&quot;Belgium&quot;,493,307),
+  (&quot;Meghan&quot;,630,&quot;Berlin&quot;,&quot;Dean&quot;,&quot;Belgium&quot;,182,396),
+  (&quot;Ray&quot;,4831,&quot;Palma de Mallorca&quot;,&quot;Uriah&quot;,&quot;Spain&quot;,35,53),
+  (&quot;Andrew&quot;,4324,&quot;Parchim	City&quot;,&quot;Chava&quot;,&quot;Germany&quot;,441,125),
+  (&quot;Connor&quot;,1438,&quot;Tarragona&quot;,&quot;Kyla&quot;,&quot;Belgium&quot;,453,251),
+  (&quot;Devin&quot;,2594,&quot;Berlin&quot;,&quot;Inez&quot;,&quot;Spain&quot;,294,312);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Ivana&quot;,2312,&quot;Sombreffe&quot;,&quot;Maxwell&quot;,&quot;Belgium&quot;,288,229),
+  (&quot;Chanda&quot;,852,&quot;Elsene&quot;,&quot;Piper&quot;,&quot;Spain&quot;,379,411),
+  (&quot;Patience&quot;,321,&quot;Málaga&quot;,&quot;Neil&quot;,&quot;Belgium&quot;,89,486),
+  (&quot;Naomi&quot;,1732,&quot;Antwerpen&quot;,&quot;Abraham&quot;,&quot;Belgium&quot;,58,224),
+  (&quot;Avye&quot;,127,&quot;Cartagena&quot;,&quot;Destiny&quot;,&quot;Belgium&quot;,104,112),
+  (&quot;Tamara&quot;,599,&quot;Santander&quot;,&quot;Clementine&quot;,&quot;Germany&quot;,239,278),
+  (&quot;Marshall&quot;,1157,&quot;Santander&quot;,&quot;Mikayla&quot;,&quot;Spain&quot;,179,252),
+  (&quot;Yvonne&quot;,3043,&quot;Bertogne&quot;,&quot;Thomas&quot;,&quot;Germany&quot;,417,453),
+  (&quot;Carter&quot;,3096,&quot;Berlin&quot;,&quot;Hadley&quot;,&quot;Spain&quot;,39,425),
+  (&quot;Lynn&quot;,3053,&quot;Mellet&quot;,&quot;Renee&quot;,&quot;Belgium&quot;,470,482);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Shana&quot;,1685,&quot;Villers-aux-Tours&quot;,&quot;Kay&quot;,&quot;Germany&quot;,221,469),
+  (&quot;Martin&quot;,3642,&quot;Koningshooikt&quot;,&quot;Natalie&quot;,&quot;Belgium&quot;,164,479),
+  (&quot;Sybil&quot;,3757,&quot;Balen&quot;,&quot;Raphael&quot;,&quot;Belgium&quot;,183,288),
+  (&quot;Orson&quot;,1184,&quot;Castelló&quot;,&quot;Kevyn&quot;,&quot;Spain&quot;,205,416),
+  (&quot;Wang&quot;,923,&quot;Badajoz&quot;,&quot;Jaime&quot;,&quot;Spain&quot;,353,134),
+  (&quot;Uma&quot;,3554,&quot;Hamburg&quot;,&quot;Chastity&quot;,&quot;Spain&quot;,76,94),
+  (&quot;Joan&quot;,4408,&quot;Brandenburg&quot;,&quot;Gray&quot;,&quot;Germany&quot;,210,176),
+  (&quot;Griffith&quot;,1450,&quot;Kasterlee&quot;,&quot;Barbara&quot;,&quot;Belgium&quot;,450,268),
+  (&quot;Briar&quot;,3367,&quot;Stendal&quot;,&quot;Claudia&quot;,&quot;Spain&quot;,368,422),
+  (&quot;Courtney&quot;,4163,&quot;Schwerin&quot;,&quot;Ori&quot;,&quot;Spain&quot;,308,349);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Indira&quot;,3309,&quot;Logroño&quot;,&quot;Aline&quot;,&quot;Spain&quot;,21,290),
+  (&quot;Wynter&quot;,2502,&quot;Delitzsch&quot;,&quot;Phillip&quot;,&quot;Spain&quot;,478,184),
+  (&quot;Joel&quot;,3134,&quot;Koekelberg&quot;,&quot;Emerald&quot;,&quot;Spain&quot;,203,106),
+  (&quot;Deirdre&quot;,4972,&quot;Sambreville&quot;,&quot;Hakeem&quot;,&quot;Belgium&quot;,315,244),
+  (&quot;McKenzie&quot;,260,&quot;San Cristóbal de la Laguna&quot;,&quot;Gavin&quot;,&quot;Spain&quot;,374,286),
+  (&quot;Carl&quot;,1931,&quot;Radebeul&quot;,&quot;Lydia&quot;,&quot;Belgium&quot;,76,417),
+  (&quot;Travis&quot;,302,&quot;Leipzig&quot;,&quot;Hedda&quot;,&quot;Belgium&quot;,202,394),
+  (&quot;Owen&quot;,707,&quot;Vigo&quot;,&quot;Dara&quot;,&quot;Belgium&quot;,470,287),
+  (&quot;Joel&quot;,925,&quot;Hamburg&quot;,&quot;Xavier&quot;,&quot;Spain&quot;,445,83),
+  (&quot;Abigail&quot;,3855,&quot;Hamburg&quot;,&quot;Laura&quot;,&quot;Belgium&quot;,41,9);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Logan&quot;,3624,&quot;Meix-Devant-Virton&quot;,&quot;Addison&quot;,&quot;Spain&quot;,212,415),
+  (&quot;Fay&quot;,2019,&quot;Beauwelz&quot;,&quot;Jolie&quot;,&quot;Germany&quot;,408,283),
+  (&quot;Dara&quot;,4861,&quot;Berg&quot;,&quot;Ciaran&quot;,&quot;Spain&quot;,168,49),
+  (&quot;Charissa&quot;,1658,&quot;Appelterre-Eichem&quot;,&quot;Myles&quot;,&quot;Spain&quot;,105,83),
+  (&quot;Sebastian&quot;,374,&quot;Logroño&quot;,&quot;Keaton&quot;,&quot;Belgium&quot;,288,72),
+  (&quot;Drake&quot;,1426,&quot;Nalinnes&quot;,&quot;Louis&quot;,&quot;Spain&quot;,158,260),
+  (&quot;Jaden&quot;,2422,&quot;Ludwigsfelde&quot;,&quot;Lacota&quot;,&quot;Spain&quot;,116,23),
+  (&quot;Amir&quot;,4327,&quot;PiŽtrebais&quot;,&quot;Alice&quot;,&quot;Belgium&quot;,470,52),
+  (&quot;Melyssa&quot;,742,&quot;Melilla&quot;,&quot;Molly&quot;,&quot;Spain&quot;,368,487),
+  (&quot;Sebastian&quot;,2752,&quot;Berlin&quot;,&quot;Ulla&quot;,&quot;Belgium&quot;,108,84);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Gisela&quot;,147,&quot;Bremen&quot;,&quot;Ifeoma&quot;,&quot;Germany&quot;,241,279),
+  (&quot;Lilah&quot;,1441,&quot;Santander&quot;,&quot;Olga&quot;,&quot;Germany&quot;,191,372),
+  (&quot;Luke&quot;,4642,&quot;Santa Coloma de Gramenet&quot;,&quot;Herrod&quot;,&quot;Spain&quot;,335,433),
+  (&quot;Amanda&quot;,1367,&quot;Santander&quot;,&quot;Zia&quot;,&quot;Germany&quot;,142,332),
+  (&quot;Armand&quot;,1843,&quot;Thuin&quot;,&quot;Holmes&quot;,&quot;Spain&quot;,321,70),
+  (&quot;Kelly&quot;,3143,&quot;Pamplona&quot;,&quot;Sonya&quot;,&quot;Germany&quot;,388,241),
+  (&quot;Maisie&quot;,1797,&quot;Bernau&quot;,&quot;Quentin&quot;,&quot;Belgium&quot;,439,483),
+  (&quot;Zorita&quot;,4899,&quot;Lingen&quot;,&quot;Jenna&quot;,&quot;Germany&quot;,276,208),
+  (&quot;Melinda&quot;,813,&quot;Köln&quot;,&quot;Jack&quot;,&quot;Spain&quot;,128,207),
+  (&quot;Emma&quot;,2416,&quot;Keumiee&quot;,&quot;Harper&quot;,&quot;Spain&quot;,260,231);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Haley&quot;,2416,&quot;Oviedo&quot;,&quot;Lester&quot;,&quot;Germany&quot;,437,11),
+  (&quot;Marny&quot;,4958,&quot;Marburg&quot;,&quot;Burton&quot;,&quot;Spain&quot;,433,228),
+  (&quot;Carly&quot;,390,&quot;Oteppe&quot;,&quot;Britanney&quot;,&quot;Germany&quot;,60,273),
+  (&quot;Griffith&quot;,2795,&quot;San Cristóbal de la Laguna&quot;,&quot;Beau&quot;,&quot;Spain&quot;,458,46),
+  (&quot;Barry&quot;,2300,&quot;Vigo&quot;,&quot;Zephania&quot;,&quot;Belgium&quot;,382,310),
+  (&quot;Hakeem&quot;,4245,&quot;Ch‰telineau&quot;,&quot;Ocean&quot;,&quot;Germany&quot;,285,362),
+  (&quot;Kathleen&quot;,3502,&quot;Berlin&quot;,&quot;Ria&quot;,&quot;Spain&quot;,390,359),
+  (&quot;Blythe&quot;,1913,&quot;Lübeck&quot;,&quot;Janna&quot;,&quot;Germany&quot;,378,301),
+  (&quot;Robert&quot;,204,&quot;Ottignies&quot;,&quot;Alexander&quot;,&quot;Germany&quot;,495,40),
+  (&quot;Madeson&quot;,3214,&quot;Overmere&quot;,&quot;Nash&quot;,&quot;Germany&quot;,386,434);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Miriam&quot;,4195,&quot;Gijón&quot;,&quot;Daquan&quot;,&quot;Germany&quot;,367,90),
+  (&quot;Emi&quot;,4904,&quot;Spiere-Helkijn&quot;,&quot;Erich&quot;,&quot;Spain&quot;,405,401),
+  (&quot;Abel&quot;,2548,&quot;Pamplona&quot;,&quot;Ora&quot;,&quot;Germany&quot;,56,145),
+  (&quot;Blake&quot;,2276,&quot;Rastatt&quot;,&quot;Rachel&quot;,&quot;Spain&quot;,209,401),
+  (&quot;Lucas&quot;,2144,&quot;Borsbeek&quot;,&quot;Iris&quot;,&quot;Spain&quot;,167,444),
+  (&quot;Christopher&quot;,489,&quot;Alacant&quot;,&quot;Anjolie&quot;,&quot;Belgium&quot;,329,290),
+  (&quot;Lydia&quot;,2815,&quot;Lillois-WitterzŽe&quot;,&quot;Honorato&quot;,&quot;Germany&quot;,188,68),
+  (&quot;Alea&quot;,3979,&quot;Beerzel&quot;,&quot;Vance&quot;,&quot;Belgium&quot;,432,379),
+  (&quot;Noble&quot;,3733,&quot;Bad Kreuznach&quot;,&quot;Erin&quot;,&quot;Germany&quot;,166,407),
+  (&quot;Kim&quot;,2543,&quot;Reus&quot;,&quot;Davis&quot;,&quot;Spain&quot;,73,340);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Sarah&quot;,418,&quot;Castelló&quot;,&quot;Ashton&quot;,&quot;Germany&quot;,268,324),
+  (&quot;Ivor&quot;,672,&quot;Offenburg&quot;,&quot;Macy&quot;,&quot;Germany&quot;,119,338),
+  (&quot;Maxwell&quot;,2293,&quot;Hamburg&quot;,&quot;Hasad&quot;,&quot;Germany&quot;,38,449),
+  (&quot;Lana&quot;,1381,&quot;Salamanca&quot;,&quot;Jared&quot;,&quot;Spain&quot;,269,482),
+  (&quot;Leonard&quot;,2781,&quot;Koekelberg&quot;,&quot;Marny&quot;,&quot;Belgium&quot;,205,302),
+  (&quot;Barbara&quot;,4613,&quot;Soye&quot;,&quot;Troy&quot;,&quot;Germany&quot;,115,164),
+  (&quot;Jackson&quot;,602,&quot;Pontevedra&quot;,&quot;Angelica&quot;,&quot;Spain&quot;,128,326),
+  (&quot;Kyle&quot;,4003,&quot;Tourinnes-Saint-Lambert&quot;,&quot;Kitra&quot;,&quot;Spain&quot;,294,308),
+  (&quot;Karleigh&quot;,1432,&quot;Las Palmas&quot;,&quot;Scarlet&quot;,&quot;Belgium&quot;,396,429),
+  (&quot;Denise&quot;,3370,&quot;Elx&quot;,&quot;Ahmed&quot;,&quot;Germany&quot;,56,269);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Joan&quot;,1078,&quot;Blieskastel&quot;,&quot;Carissa&quot;,&quot;Belgium&quot;,137,173),
+  (&quot;Tad&quot;,3850,&quot;Essene&quot;,&quot;Montana&quot;,&quot;Belgium&quot;,238,370),
+  (&quot;Sean&quot;,3388,&quot;Itterbeek&quot;,&quot;Clark&quot;,&quot;Spain&quot;,335,461),
+  (&quot;Alexis&quot;,3274,&quot;Hanau&quot;,&quot;Frances&quot;,&quot;Germany&quot;,222,199),
+  (&quot;Barrett&quot;,4920,&quot;Ceuta&quot;,&quot;Vincent&quot;,&quot;Spain&quot;,333,316),
+  (&quot;Chancellor&quot;,1400,&quot;Ciplet&quot;,&quot;Maile&quot;,&quot;Belgium&quot;,309,49),
+  (&quot;Fallon&quot;,963,&quot;Eberswalde-Finow&quot;,&quot;Regina&quot;,&quot;Germany&quot;,348,419),
+  (&quot;Zachary&quot;,2812,&quot;Sint-Katherina-Lombeek&quot;,&quot;Brooke&quot;,&quot;Spain&quot;,260,125),
+  (&quot;Jessica&quot;,4050,&quot;Roux&quot;,&quot;Zeph&quot;,&quot;Belgium&quot;,18,11),
+  (&quot;Wallace&quot;,4773,&quot;Waarloos&quot;,&quot;Neil&quot;,&quot;Belgium&quot;,468,97);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Keelie&quot;,1294,&quot;Villers-la-Bonne-Eau&quot;,&quot;Lacota&quot;,&quot;Spain&quot;,369,70),
+  (&quot;Fay&quot;,2441,&quot;Tillet&quot;,&quot;Damian&quot;,&quot;Spain&quot;,58,155),
+  (&quot;Eric&quot;,798,&quot;Destelbergen&quot;,&quot;Macon&quot;,&quot;Germany&quot;,405,352),
+  (&quot;Hall&quot;,3432,&quot;Berlin&quot;,&quot;Channing&quot;,&quot;Germany&quot;,358,430),
+  (&quot;Aimee&quot;,1710,&quot;Badalona&quot;,&quot;Marcia&quot;,&quot;Belgium&quot;,493,373),
+  (&quot;Tucker&quot;,1323,&quot;B.S.D.&quot;,&quot;Adria&quot;,&quot;Spain&quot;,422,384),
+  (&quot;Reece&quot;,1121,&quot;Ludwigsfelde&quot;,&quot;Adrian&quot;,&quot;Germany&quot;,403,179),
+  (&quot;Rajah&quot;,2280,&quot;Oostkerke&quot;,&quot;Mari&quot;,&quot;Spain&quot;,206,315),
+  (&quot;Avram&quot;,1820,&quot;Quickborn&quot;,&quot;Yasir&quot;,&quot;Spain&quot;,463,93),
+  (&quot;Timon&quot;,2875,&quot;Wondelgem&quot;,&quot;Aquila&quot;,&quot;Spain&quot;,109,423);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Charles&quot;,1267,&quot;Pontevedra&quot;,&quot;Jeremy&quot;,&quot;Belgium&quot;,500,153),
+  (&quot;Stella&quot;,3411,&quot;Dessau&quot;,&quot;Evan&quot;,&quot;Spain&quot;,13,175),
+  (&quot;Kelly&quot;,4661,&quot;Lugo&quot;,&quot;Latifah&quot;,&quot;Spain&quot;,150,406),
+  (&quot;Nerea&quot;,4977,&quot;Hamburg&quot;,&quot;Elmo&quot;,&quot;Belgium&quot;,271,7),
+  (&quot;Ariel&quot;,3951,&quot;Varsenare&quot;,&quot;Hasad&quot;,&quot;Spain&quot;,186,229),
+  (&quot;Plato&quot;,3276,&quot;Teruel&quot;,&quot;Graham&quot;,&quot;Spain&quot;,131,426),
+  (&quot;Cade&quot;,3387,&quot;Granada&quot;,&quot;Brody&quot;,&quot;Belgium&quot;,424,101),
+  (&quot;Jade&quot;,3605,&quot;Anklam&quot;,&quot;Sylvester&quot;,&quot;Germany&quot;,106,405),
+  (&quot;Charity&quot;,1488,&quot;Bremerhaven&quot;,&quot;Uma&quot;,&quot;Germany&quot;,325,214),
+  (&quot;Randall&quot;,3914,&quot;La Hulpe&quot;,&quot;Chloe&quot;,&quot;Germany&quot;,270,139);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Illana&quot;,1974,&quot;Lebbeke&quot;,&quot;Catherine&quot;,&quot;Belgium&quot;,450,382),
+  (&quot;Cassady&quot;,4906,&quot;Ceuta&quot;,&quot;Wyoming&quot;,&quot;Spain&quot;,10,447),
+  (&quot;Galvin&quot;,3054,&quot;Neustrelitz&quot;,&quot;Indira&quot;,&quot;Belgium&quot;,302,315),
+  (&quot;Benedict&quot;,2206,&quot;Wadgassen&quot;,&quot;Haley&quot;,&quot;Spain&quot;,244,131),
+  (&quot;Petra&quot;,572,&quot;Bersillies-l'Abbaye&quot;,&quot;Phoebe&quot;,&quot;Germany&quot;,54,232),
+  (&quot;Perry&quot;,2910,&quot;León&quot;,&quot;Riley&quot;,&quot;Spain&quot;,55,386),
+  (&quot;Xander&quot;,3911,&quot;Husum&quot;,&quot;Fletcher&quot;,&quot;Belgium&quot;,140,404),
+  (&quot;Moses&quot;,4262,&quot;Palma de Mallorca&quot;,&quot;Jared&quot;,&quot;Belgium&quot;,57,270),
+  (&quot;Hayley&quot;,2415,&quot;Oviedo&quot;,&quot;Jasper&quot;,&quot;Germany&quot;,252,264),
+  (&quot;Violet&quot;,2074,&quot;Alacant&quot;,&quot;Prescott&quot;,&quot;Spain&quot;,163,444);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Quinn&quot;,1730,&quot;Paderborn&quot;,&quot;Lesley&quot;,&quot;Belgium&quot;,286,137),
+  (&quot;Guy&quot;,1142,&quot;Broechem&quot;,&quot;Hillary&quot;,&quot;Spain&quot;,26,9),
+  (&quot;Derek&quot;,2586,&quot;Bremerhaven&quot;,&quot;Zelda&quot;,&quot;Spain&quot;,34,171),
+  (&quot;Jeanette&quot;,4663,&quot;Ohain&quot;,&quot;Russell&quot;,&quot;Germany&quot;,237,8),
+  (&quot;Murphy&quot;,361,&quot;Martelange&quot;,&quot;Jillian&quot;,&quot;Belgium&quot;,120,321),
+  (&quot;John&quot;,2796,&quot;Kampenhout&quot;,&quot;Duncan&quot;,&quot;Spain&quot;,424,282),
+  (&quot;Andrew&quot;,2410,&quot;Fuenlabrada&quot;,&quot;Keith&quot;,&quot;Spain&quot;,253,66),
+  (&quot;Jermaine&quot;,4168,&quot;Murcia&quot;,&quot;Orla&quot;,&quot;Spain&quot;,291,388),
+  (&quot;Leandra&quot;,2241,&quot;Merseburg&quot;,&quot;Stephen&quot;,&quot;Belgium&quot;,356,98),
+  (&quot;Mannix&quot;,3600,&quot;Neuville-en-Condroz&quot;,&quot;Ariel&quot;,&quot;Belgium&quot;,434,455);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Tatiana&quot;,1283,&quot;Völklingen&quot;,&quot;Sharon&quot;,&quot;Belgium&quot;,140,257),
+  (&quot;Chloe&quot;,1174,&quot;Bremerhaven&quot;,&quot;Marvin&quot;,&quot;Spain&quot;,131,368),
+  (&quot;Arthur&quot;,4612,&quot;Bremen&quot;,&quot;Dante&quot;,&quot;Belgium&quot;,182,371),
+  (&quot;Maile&quot;,3377,&quot;Parchim	City&quot;,&quot;Quinn&quot;,&quot;Germany&quot;,316,394),
+  (&quot;Michael&quot;,4371,&quot;Vigo&quot;,&quot;Vladimir&quot;,&quot;Belgium&quot;,33,230),
+  (&quot;Peter&quot;,1177,&quot;Valéncia&quot;,&quot;Jordan&quot;,&quot;Spain&quot;,438,181),
+  (&quot;Tana&quot;,282,&quot;Cartagena&quot;,&quot;Mohammad&quot;,&quot;Spain&quot;,317,317),
+  (&quot;Adara&quot;,2965,&quot;Teruel&quot;,&quot;Kamal&quot;,&quot;Spain&quot;,472,124),
+  (&quot;Bruno&quot;,4823,&quot;Cartagena&quot;,&quot;Declan&quot;,&quot;Belgium&quot;,480,107),
+  (&quot;Ava&quot;,3282,&quot;Dos Hermanas&quot;,&quot;Sade&quot;,&quot;Germany&quot;,206,62);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Hiram&quot;,2467,&quot;Teruel&quot;,&quot;Doris&quot;,&quot;Spain&quot;,69,138),
+  (&quot;Ivana&quot;,4933,&quot;Hamburg&quot;,&quot;Mona&quot;,&quot;Belgium&quot;,65,397),
+  (&quot;Beau&quot;,4743,&quot;Ávila&quot;,&quot;Laith&quot;,&quot;Belgium&quot;,467,150),
+  (&quot;Pamela&quot;,2820,&quot;Logroño&quot;,&quot;Adria&quot;,&quot;Germany&quot;,160,61),
+  (&quot;Cruz&quot;,4490,&quot;Grand-Manil&quot;,&quot;Shannon&quot;,&quot;Belgium&quot;,332,92),
+  (&quot;Amela&quot;,4240,&quot;Rijkevorsel&quot;,&quot;Charissa&quot;,&quot;Spain&quot;,157,358),
+  (&quot;Emerson&quot;,826,&quot;Wedel&quot;,&quot;Piper&quot;,&quot;Spain&quot;,315,356),
+  (&quot;Candace&quot;,2354,&quot;Goslar&quot;,&quot;Hyacinth&quot;,&quot;Germany&quot;,172,215),
+  (&quot;Stacey&quot;,1244,&quot;Santander&quot;,&quot;Garrett&quot;,&quot;Germany&quot;,123,366),
+  (&quot;Burton&quot;,4179,&quot;Krefeld&quot;,&quot;Lisandra&quot;,&quot;Germany&quot;,427,308);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Neville&quot;,2449,&quot;Pamplona&quot;,&quot;Serena&quot;,&quot;Spain&quot;,264,405),
+  (&quot;Serena&quot;,2969,&quot;Móstoles&quot;,&quot;Beverly&quot;,&quot;Belgium&quot;,465,429),
+  (&quot;Emmanuel&quot;,4277,&quot;Ahrensburg&quot;,&quot;Dale&quot;,&quot;Spain&quot;,140,141),
+  (&quot;Mason&quot;,4818,&quot;Cáceres&quot;,&quot;Denise&quot;,&quot;Spain&quot;,171,303),
+  (&quot;Cullen&quot;,2058,&quot;A Coruña&quot;,&quot;Elton&quot;,&quot;Germany&quot;,87,130),
+  (&quot;Hu&quot;,2558,&quot;Oudergem&quot;,&quot;Bree&quot;,&quot;Spain&quot;,449,290),
+  (&quot;Xaviera&quot;,4159,&quot;Schellebelle&quot;,&quot;Byron&quot;,&quot;Germany&quot;,165,143),
+  (&quot;Velma&quot;,814,&quot;Milmort&quot;,&quot;Cassady&quot;,&quot;Belgium&quot;,449,252),
+  (&quot;Emmanuel&quot;,2874,&quot;Kalken&quot;,&quot;Isabelle&quot;,&quot;Belgium&quot;,472,32),
+  (&quot;Fulton&quot;,1321,&quot;Baasrode&quot;,&quot;Henry&quot;,&quot;Spain&quot;,345,251);
+
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Quemby&quot;,3794,&quot;Logroño&quot;,&quot;Kirby&quot;,&quot;Belgium&quot;,51,273,421),
+  (&quot;Ishmael&quot;,3826,&quot;Murcia&quot;,&quot;Matthew&quot;,&quot;Belgium&quot;,52,259,123),
+  (&quot;Adria&quot;,4229,&quot;Zweibrücken&quot;,&quot;Nita&quot;,&quot;Spain&quot;,53,363,478),
+  (&quot;Kelsey&quot;,2446,&quot;Koekelberg&quot;,&quot;Lacy&quot;,&quot;Spain&quot;,54,124,154),
+  (&quot;Wyoming&quot;,2725,&quot;Berlin&quot;,&quot;Mohammad&quot;,&quot;Belgium&quot;,55,126,234),
+  (&quot;Erasmus&quot;,1497,&quot;Palma de Mallorca&quot;,&quot;Laura&quot;,&quot;Belgium&quot;,56,201,263),
+  (&quot;Madeson&quot;,1659,&quot;Teruel&quot;,&quot;Levi&quot;,&quot;Germany&quot;,57,499,74),
+  (&quot;Clare&quot;,3882,&quot;Ch‰telineau&quot;,&quot;Timon&quot;,&quot;Spain&quot;,58,63,460),
+  (&quot;Iris&quot;,3881,&quot;Champion&quot;,&quot;Cassandra&quot;,&quot;Germany&quot;,59,401,319),
+  (&quot;Molly&quot;,1556,&quot;Geel&quot;,&quot;Aiko&quot;,&quot;Spain&quot;,60,439,206);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Chancellor&quot;,2327,&quot;Schaarbeek&quot;,&quot;Dora&quot;,&quot;Spain&quot;,61,309,428),
+  (&quot;Imelda&quot;,4122,&quot;Hamburg&quot;,&quot;Hop&quot;,&quot;Germany&quot;,62,206,126),
+  (&quot;Nigel&quot;,3757,&quot;Lugo&quot;,&quot;Murphy&quot;,&quot;Spain&quot;,63,422,81),
+  (&quot;Nasim&quot;,2812,&quot;Valéncia&quot;,&quot;Barbara&quot;,&quot;Belgium&quot;,64,6,230),
+  (&quot;Imani&quot;,4419,&quot;Gasteiz&quot;,&quot;Lacy&quot;,&quot;Spain&quot;,65,282,20),
+  (&quot;Darryl&quot;,3528,&quot;Anderlecht&quot;,&quot;Kane&quot;,&quot;Spain&quot;,66,155,482),
+  (&quot;Suki&quot;,2904,&quot;Ramskapelle&quot;,&quot;Abdul&quot;,&quot;Germany&quot;,67,135,161),
+  (&quot;Elton&quot;,706,&quot;Vlimmeren&quot;,&quot;Juliet&quot;,&quot;Spain&quot;,68,240,149),
+  (&quot;Nola&quot;,1887,&quot;Schaarbeek&quot;,&quot;Indira&quot;,&quot;Germany&quot;,69,296,301),
+  (&quot;Leonard&quot;,2664,&quot;Bo‘lhe&quot;,&quot;Reagan&quot;,&quot;Spain&quot;,70,164,357);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Penelope&quot;,2808,&quot;Ceuta&quot;,&quot;Eliana&quot;,&quot;Spain&quot;,71,308,395),
+  (&quot;Eve&quot;,4214,&quot;Hamburg&quot;,&quot;Jana&quot;,&quot;Germany&quot;,72,268,489),
+  (&quot;Phelan&quot;,1405,&quot;Nuremberg&quot;,&quot;Scott&quot;,&quot;Spain&quot;,73,441,279),
+  (&quot;Brianna&quot;,3223,&quot;Badajoz&quot;,&quot;Sage&quot;,&quot;Spain&quot;,74,303,247),
+  (&quot;Salvador&quot;,488,&quot;Ceuta&quot;,&quot;Samuel&quot;,&quot;Germany&quot;,75,88,138),
+  (&quot;Nasim&quot;,2778,&quot;Bogaarden&quot;,&quot;Gabriel&quot;,&quot;Belgium&quot;,76,97,68),
+  (&quot;Quail&quot;,4980,&quot;Cartagena&quot;,&quot;Aurora&quot;,&quot;Germany&quot;,77,70,56),
+  (&quot;Ulla&quot;,4484,&quot;Zeveneken&quot;,&quot;Hedda&quot;,&quot;Germany&quot;,78,494,164),
+  (&quot;Zeph&quot;,2713,&quot;Hamburg&quot;,&quot;Graham&quot;,&quot;Spain&quot;,79,470,329),
+  (&quot;Ulric&quot;,3437,&quot;Wachtebeke&quot;,&quot;Grant&quot;,&quot;Belgium&quot;,80,264,249);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Josephine&quot;,139,&quot;Hulste&quot;,&quot;Ivan&quot;,&quot;Belgium&quot;,81,15,216),
+  (&quot;Daniel&quot;,3537,&quot;Burg&quot;,&quot;Nathan&quot;,&quot;Spain&quot;,82,195,150),
+  (&quot;Ronan&quot;,3747,&quot;Cuenca&quot;,&quot;Ima&quot;,&quot;Germany&quot;,83,217,174),
+  (&quot;Dawn&quot;,1642,&quot;Palma de Mallorca&quot;,&quot;Raja&quot;,&quot;Germany&quot;,84,473,402),
+  (&quot;Faith&quot;,329,&quot;Limburg a.d. Lahn&quot;,&quot;Fiona&quot;,&quot;Belgium&quot;,85,257,312),
+  (&quot;Sawyer&quot;,4574,&quot;Bad Oldesloe&quot;,&quot;May&quot;,&quot;Spain&quot;,86,115,184),
+  (&quot;Ina&quot;,2671,&quot;Panketal&quot;,&quot;Nissim&quot;,&quot;Belgium&quot;,87,180,288),
+  (&quot;Macaulay&quot;,1932,&quot;Hagen&quot;,&quot;Mercedes&quot;,&quot;Belgium&quot;,88,134,91),
+  (&quot;Cairo&quot;,4593,&quot;Vigo&quot;,&quot;Timon&quot;,&quot;Belgium&quot;,89,45,16),
+  (&quot;Timothy&quot;,2640,&quot;Morhet&quot;,&quot;Cain&quot;,&quot;Germany&quot;,90,458,333);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Yen&quot;,4621,&quot;Sint-Pieters-Woluwe&quot;,&quot;Deacon&quot;,&quot;Belgium&quot;,91,1,125),
+  (&quot;Aimee&quot;,4185,&quot;Bremen&quot;,&quot;Forrest&quot;,&quot;Germany&quot;,92,73,188),
+  (&quot;Barry&quot;,3947,&quot;Panketal&quot;,&quot;Fletcher&quot;,&quot;Spain&quot;,93,403,341),
+  (&quot;Elvis&quot;,2314,&quot;Burgos&quot;,&quot;Mason&quot;,&quot;Germany&quot;,94,316,265),
+  (&quot;Nolan&quot;,3952,&quot;Donosti&quot;,&quot;Patrick&quot;,&quot;Spain&quot;,95,373,407),
+  (&quot;Cameron&quot;,1270,&quot;Rostock&quot;,&quot;Warren&quot;,&quot;Spain&quot;,96,339,262),
+  (&quot;Jemima&quot;,1328,&quot;Wittenberg&quot;,&quot;Victor&quot;,&quot;Spain&quot;,97,406,150),
+  (&quot;Colorado&quot;,2852,&quot;Bad Neuenahr-Ahrweiler&quot;,&quot;Sylvester&quot;,&quot;Belgium&quot;,98,108,371),
+  (&quot;Lunea&quot;,866,&quot;Halle&quot;,&quot;Theodore&quot;,&quot;Germany&quot;,99,254,210),
+  (&quot;Rose&quot;,4402,&quot;Lodelinsart&quot;,&quot;Katell&quot;,&quot;Germany&quot;,100,372,323);
+
+
+
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;MacKenzie&quot;,3603,&quot;Brussegem&quot;,&quot;Graiden&quot;,&quot;Germany&quot;,1,354,451),
+  (&quot;Sebastian&quot;,120,&quot;Dillenburg&quot;,&quot;Camden&quot;,&quot;Spain&quot;,2,185,252),
+  (&quot;Aladdin&quot;,3049,&quot;Melilla&quot;,&quot;Norman&quot;,&quot;Belgium&quot;,3,188,460),
+  (&quot;Lance&quot;,2956,&quot;Wilhelmshaven&quot;,&quot;Linus&quot;,&quot;Germany&quot;,4,197,432),
+  (&quot;Ruby&quot;,1271,&quot;Völklingen&quot;,&quot;Halla&quot;,&quot;Germany&quot;,5,215,118),
+  (&quot;Sylvester&quot;,3783,&quot;Gijón&quot;,&quot;Emmanuel&quot;,&quot;Spain&quot;,6,126,446),
+  (&quot;Vincent&quot;,2139,&quot;Wetteren&quot;,&quot;Ryder&quot;,&quot;Belgium&quot;,7,369,127),
+  (&quot;Hayden&quot;,1482,&quot;Houtave&quot;,&quot;Judah&quot;,&quot;Germany&quot;,8,375,79),
+  (&quot;Anjolie&quot;,3217,&quot;Zwevegem&quot;,&quot;Avye&quot;,&quot;Belgium&quot;,9,243,215),
+  (&quot;Kai&quot;,2397,&quot;Neumünster&quot;,&quot;Brady&quot;,&quot;Belgium&quot;,10,389,234);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Lionel&quot;,3863,&quot;Pamplona&quot;,&quot;Ingrid&quot;,&quot;Germany&quot;,11,279,22),
+  (&quot;Rinah&quot;,1132,&quot;Frankfurt&quot;,&quot;Tatum&quot;,&quot;Germany&quot;,12,479,275),
+  (&quot;Ronan&quot;,252,&quot;Badajoz&quot;,&quot;Candace&quot;,&quot;Belgium&quot;,13,151,218),
+  (&quot;Ina&quot;,1115,&quot;Straubing&quot;,&quot;Hoyt&quot;,&quot;Spain&quot;,14,374,310),
+  (&quot;Rhonda&quot;,2234,&quot;Schwedt&quot;,&quot;Natalie&quot;,&quot;Belgium&quot;,15,120,410),
+  (&quot;Scott&quot;,1203,&quot;Jerez de la Frontera&quot;,&quot;Kaye&quot;,&quot;Germany&quot;,16,151,161),
+  (&quot;Mohammad&quot;,3375,&quot;Profondeville&quot;,&quot;Ocean&quot;,&quot;Belgium&quot;,17,80,454),
+  (&quot;Nicholas&quot;,1218,&quot;Tarragona&quot;,&quot;Naomi&quot;,&quot;Belgium&quot;,18,229,26),
+  (&quot;Fitzgerald&quot;,383,&quot;Palma de Mallorca&quot;,&quot;Camilla&quot;,&quot;Belgium&quot;,19,419,188),
+  (&quot;Alea&quot;,1556,&quot;Ternat&quot;,&quot;Dennis&quot;,&quot;Spain&quot;,20,277,12);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Lee&quot;,4751,&quot;Dreieich&quot;,&quot;Winter&quot;,&quot;Belgium&quot;,21,426,95),
+  (&quot;Grady&quot;,683,&quot;Cartagena&quot;,&quot;Lacota&quot;,&quot;Belgium&quot;,22,188,107),
+  (&quot;Sybill&quot;,1736,&quot;Murcia&quot;,&quot;Reese&quot;,&quot;Germany&quot;,23,58,323),
+  (&quot;Reuben&quot;,275,&quot;Bremen&quot;,&quot;Nasim&quot;,&quot;Germany&quot;,24,466,366),
+  (&quot;Kim&quot;,3118,&quot;Teruel&quot;,&quot;Rudyard&quot;,&quot;Belgium&quot;,25,223,21),
+  (&quot;Heather&quot;,3948,&quot;Vigo&quot;,&quot;Quemby&quot;,&quot;Germany&quot;,26,149,181),
+  (&quot;Hiroko&quot;,4915,&quot;Oviedo&quot;,&quot;Noel&quot;,&quot;Belgium&quot;,27,460,89),
+  (&quot;Leila&quot;,818,&quot;Kiel&quot;,&quot;Aspen&quot;,&quot;Belgium&quot;,28,446,468),
+  (&quot;Craig&quot;,431,&quot;Nossegem&quot;,&quot;Clare&quot;,&quot;Belgium&quot;,29,406,68),
+  (&quot;Leigh&quot;,2640,&quot;Oudergem&quot;,&quot;Abbot&quot;,&quot;Germany&quot;,30,163,335);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Rebecca&quot;,4664,&quot;Tongrinne&quot;,&quot;Jordan&quot;,&quot;Spain&quot;,31,319,460),
+  (&quot;Emerson&quot;,1340,&quot;Beho&quot;,&quot;Kirby&quot;,&quot;Spain&quot;,32,360,8),
+  (&quot;Amir&quot;,2102,&quot;Werder&quot;,&quot;Kiayada&quot;,&quot;Spain&quot;,33,68,269),
+  (&quot;Lawrence&quot;,1325,&quot;Vorst&quot;,&quot;Inga&quot;,&quot;Belgium&quot;,34,206,5),
+  (&quot;Gregory&quot;,3506,&quot;Bautzen&quot;,&quot;Jescie&quot;,&quot;Belgium&quot;,35,457,366),
+  (&quot;Elizabeth&quot;,3646,&quot;Huelva&quot;,&quot;Evelyn&quot;,&quot;Spain&quot;,36,480,63),
+  (&quot;Cherokee&quot;,4457,&quot;Torrevieja&quot;,&quot;Desirae&quot;,&quot;Spain&quot;,37,264,302),
+  (&quot;Melissa&quot;,3454,&quot;Ribnitz-Damgarten&quot;,&quot;Kibo&quot;,&quot;Germany&quot;,38,483,89),
+  (&quot;Cynthia&quot;,2589,&quot;Santander&quot;,&quot;Xyla&quot;,&quot;Spain&quot;,39,444,80),
+  (&quot;Nash&quot;,4354,&quot;L'Hospitalet de Llobregat&quot;,&quot;Cairo&quot;,&quot;Belgium&quot;,40,374,43);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Jasper&quot;,4060,&quot;Bayreuth&quot;,&quot;Scott&quot;,&quot;Belgium&quot;,41,425,498),
+  (&quot;Howard&quot;,2887,&quot;Mont-Saint-AndrŽ&quot;,&quot;Garrett&quot;,&quot;Belgium&quot;,42,104,7),
+  (&quot;Brennan&quot;,4643,&quot;Dolembreux&quot;,&quot;Aimee&quot;,&quot;Spain&quot;,43,483,2),
+  (&quot;Lester&quot;,1124,&quot;Anderlecht&quot;,&quot;Keely&quot;,&quot;Belgium&quot;,44,272,247),
+  (&quot;Cora&quot;,3816,&quot;Huesca&quot;,&quot;Ayanna&quot;,&quot;Belgium&quot;,45,86,187),
+  (&quot;Aileen&quot;,3971,&quot;Prenzlau&quot;,&quot;Micah&quot;,&quot;Germany&quot;,46,347,290),
+  (&quot;Ryder&quot;,885,&quot;Sint-Kwintens-Lennik&quot;,&quot;Matthew&quot;,&quot;Germany&quot;,47,344,368),
+  (&quot;Wang&quot;,1643,&quot;Rastatt&quot;,&quot;Hoyt&quot;,&quot;Germany&quot;,48,254,23),
+  (&quot;Heather&quot;,4390,&quot;Karlsruhe&quot;,&quot;Drew&quot;,&quot;Germany&quot;,49,132,241),
+  (&quot;Wesley&quot;,1768,&quot;Schwerin&quot;,&quot;Kellie&quot;,&quot;Spain&quot;,50,304,85);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Quemby&quot;,3794,&quot;Logroño&quot;,&quot;Kirby&quot;,&quot;Belgium&quot;,51,273,421),
+  (&quot;Ishmael&quot;,3826,&quot;Murcia&quot;,&quot;Matthew&quot;,&quot;Belgium&quot;,52,259,123),
+  (&quot;Adria&quot;,4229,&quot;Zweibrücken&quot;,&quot;Nita&quot;,&quot;Spain&quot;,53,363,478),
+  (&quot;Kelsey&quot;,2446,&quot;Koekelberg&quot;,&quot;Lacy&quot;,&quot;Spain&quot;,54,124,154),
+  (&quot;Wyoming&quot;,2725,&quot;Berlin&quot;,&quot;Mohammad&quot;,&quot;Belgium&quot;,55,126,234),
+  (&quot;Erasmus&quot;,1497,&quot;Palma de Mallorca&quot;,&quot;Laura&quot;,&quot;Belgium&quot;,56,201,263),
+  (&quot;Madeson&quot;,1659,&quot;Teruel&quot;,&quot;Levi&quot;,&quot;Germany&quot;,57,499,74),
+  (&quot;Clare&quot;,3882,&quot;Ch‰telineau&quot;,&quot;Timon&quot;,&quot;Spain&quot;,58,63,460),
+  (&quot;Iris&quot;,3881,&quot;Champion&quot;,&quot;Cassandra&quot;,&quot;Germany&quot;,59,401,319),
+  (&quot;Molly&quot;,1556,&quot;Geel&quot;,&quot;Aiko&quot;,&quot;Spain&quot;,60,439,206);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Chancellor&quot;,2327,&quot;Schaarbeek&quot;,&quot;Dora&quot;,&quot;Spain&quot;,61,309,428),
+  (&quot;Imelda&quot;,4122,&quot;Hamburg&quot;,&quot;Hop&quot;,&quot;Germany&quot;,62,206,126),
+  (&quot;Nigel&quot;,3757,&quot;Lugo&quot;,&quot;Murphy&quot;,&quot;Spain&quot;,63,422,81),
+  (&quot;Nasim&quot;,2812,&quot;Valéncia&quot;,&quot;Barbara&quot;,&quot;Belgium&quot;,64,6,230),
+  (&quot;Imani&quot;,4419,&quot;Gasteiz&quot;,&quot;Lacy&quot;,&quot;Spain&quot;,65,282,20),
+  (&quot;Darryl&quot;,3528,&quot;Anderlecht&quot;,&quot;Kane&quot;,&quot;Spain&quot;,66,155,482),
+  (&quot;Suki&quot;,2904,&quot;Ramskapelle&quot;,&quot;Abdul&quot;,&quot;Germany&quot;,67,135,161),
+  (&quot;Elton&quot;,706,&quot;Vlimmeren&quot;,&quot;Juliet&quot;,&quot;Spain&quot;,68,240,149),
+  (&quot;Nola&quot;,1887,&quot;Schaarbeek&quot;,&quot;Indira&quot;,&quot;Germany&quot;,69,296,301),
+  (&quot;Leonard&quot;,2664,&quot;Bo‘lhe&quot;,&quot;Reagan&quot;,&quot;Spain&quot;,70,164,357);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Penelope&quot;,2808,&quot;Ceuta&quot;,&quot;Eliana&quot;,&quot;Spain&quot;,71,308,395),
+  (&quot;Eve&quot;,4214,&quot;Hamburg&quot;,&quot;Jana&quot;,&quot;Germany&quot;,72,268,489),
+  (&quot;Phelan&quot;,1405,&quot;Nuremberg&quot;,&quot;Scott&quot;,&quot;Spain&quot;,73,441,279),
+  (&quot;Brianna&quot;,3223,&quot;Badajoz&quot;,&quot;Sage&quot;,&quot;Spain&quot;,74,303,247),
+  (&quot;Salvador&quot;,488,&quot;Ceuta&quot;,&quot;Samuel&quot;,&quot;Germany&quot;,75,88,138),
+  (&quot;Nasim&quot;,2778,&quot;Bogaarden&quot;,&quot;Gabriel&quot;,&quot;Belgium&quot;,76,97,68),
+  (&quot;Quail&quot;,4980,&quot;Cartagena&quot;,&quot;Aurora&quot;,&quot;Germany&quot;,77,70,56),
+  (&quot;Ulla&quot;,4484,&quot;Zeveneken&quot;,&quot;Hedda&quot;,&quot;Germany&quot;,78,494,164),
+  (&quot;Zeph&quot;,2713,&quot;Hamburg&quot;,&quot;Graham&quot;,&quot;Spain&quot;,79,470,329),
+  (&quot;Ulric&quot;,3437,&quot;Wachtebeke&quot;,&quot;Grant&quot;,&quot;Belgium&quot;,80,264,249);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Josephine&quot;,139,&quot;Hulste&quot;,&quot;Ivan&quot;,&quot;Belgium&quot;,81,15,216),
+  (&quot;Daniel&quot;,3537,&quot;Burg&quot;,&quot;Nathan&quot;,&quot;Spain&quot;,82,195,150),
+  (&quot;Ronan&quot;,3747,&quot;Cuenca&quot;,&quot;Ima&quot;,&quot;Germany&quot;,83,217,174),
+  (&quot;Dawn&quot;,1642,&quot;Palma de Mallorca&quot;,&quot;Raja&quot;,&quot;Germany&quot;,84,473,402),
+  (&quot;Faith&quot;,329,&quot;Limburg a.d. Lahn&quot;,&quot;Fiona&quot;,&quot;Belgium&quot;,85,257,312),
+  (&quot;Sawyer&quot;,4574,&quot;Bad Oldesloe&quot;,&quot;May&quot;,&quot;Spain&quot;,86,115,184),
+  (&quot;Ina&quot;,2671,&quot;Panketal&quot;,&quot;Nissim&quot;,&quot;Belgium&quot;,87,180,288),
+  (&quot;Macaulay&quot;,1932,&quot;Hagen&quot;,&quot;Mercedes&quot;,&quot;Belgium&quot;,88,134,91),
+  (&quot;Cairo&quot;,4593,&quot;Vigo&quot;,&quot;Timon&quot;,&quot;Belgium&quot;,89,45,16),
+  (&quot;Timothy&quot;,2640,&quot;Morhet&quot;,&quot;Cain&quot;,&quot;Germany&quot;,90,458,333);
+INSERT INTO Direcciones (`Calle`,`Numero`,`Ciudad`,`Provincia`,`Pais`,`Branch_id`,`Employee_id`,`Customer_id`)
+VALUES
+  (&quot;Yen&quot;,4621,&quot;Sint-Pieters-Woluwe&quot;,&quot;Deacon&quot;,&quot;Belgium&quot;,91,1,125),
+  (&quot;Aimee&quot;,4185,&quot;Bremen&quot;,&quot;Forrest&quot;,&quot;Germany&quot;,92,73,188),
+  (&quot;Barry&quot;,3947,&quot;Panketal&quot;,&quot;Fletcher&quot;,&quot;Spain&quot;,93,403,341),
+  (&quot;Elvis&quot;,2314,&quot;Burgos&quot;,&quot;Mason&quot;,&quot;Germany&quot;,94,316,265),
+  (&quot;Nolan&quot;,3952,&quot;Donosti&quot;,&quot;Patrick&quot;,&quot;Spain&quot;,95,373,407),
+  (&quot;Cameron&quot;,1270,&quot;Rostock&quot;,&quot;Warren&quot;,&quot;Spain&quot;,96,339,262),
+  (&quot;Jemima&quot;,1328,&quot;Wittenberg&quot;,&quot;Victor&quot;,&quot;Spain&quot;,97,406,150),
+  (&quot;Colorado&quot;,2852,&quot;Bad Neuenahr-Ahrweiler&quot;,&quot;Sylvester&quot;,&quot;Belgium&quot;,98,108,371),
+  (&quot;Lunea&quot;,866,&quot;Halle&quot;,&quot;Theodore&quot;,&quot;Germany&quot;,99,254,210),
+  (&quot;Rose&quot;,4402,&quot;Lodelinsart&quot;,&quot;Katell&quot;,&quot;Germany&quot;,100,372,323);
+
+
+
+
+ALTER TABLE cuenta ADD COLUMN Tipo_Cuenta TEXT
+
+//NO ME DEJA REALIZAR INSERT INTO//
+INSERT INTO cuenta (Tipo_Cuenta)
+VALUES (&quot;Caja de ahorros en Dólares&quot;), (&quot;Cuenta corriente en Pesos&quot;), 
+       (&quot;Cuenta corriente en Dólares&quot;), (&quot;Cuenta inversion&quot;);
+
+
+UPDATE cuenta 
+SET Tipo_Cuenta = &quot;Cuenta corriente en dolares&quot; WHERE account_id BETWEEN 1 and 50; 
+UPDATE cuenta 
+SET Tipo_Cuenta = &quot;Caja de ahorros en Pesos&quot; WHERE account_id BETWEEN 51 and 120;
+UPDATE cuenta 
+SET Tipo_Cuenta = &quot;Caja de ahorros en Dólares&quot; WHERE account_id BETWEEN 121 and 250; 
+UPDATE cuenta 
+SET Tipo_Cuenta = &quot;Cuenta inversion&quot; WHERE account_id BETWEEN 251 and 400;
+UPDATE cuenta 
+SET Tipo_Cuenta = &quot;Cuenta corriente en Pesos&quot; WHERE account_id BETWEEN 401 and 500;
+
+
+UPDATE empleado 
+SET employee_hire_date = substr(employee_hire_date, 7) || &quot;-&quot; || substr(employee_hire_date,4,2) || &quot;-&quot; || substr(employee_hire_date, 1,2) 
+WHERE employee_id&gt;0; </sql><sql name="Problematica2">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;sqlb_project&gt;&lt;db path=&quot;C:\Users\vicky\Desktop\vicky\Curso ITBA\Sprints\6. Base de datos\itbank.db&quot; readonly=&quot;0&quot; foreign_keys=&quot;1&quot; case_sensitive_like=&quot;0&quot; temp_store=&quot;0&quot; wal_autocheckpoint=&quot;1000&quot; synchronous=&quot;2&quot;/&gt;&lt;attached/&gt;&lt;window&gt;&lt;main_tabs open=&quot;structure browser pragmas query&quot; current=&quot;3&quot;/&gt;&lt;/window&gt;&lt;tab_structure&gt;&lt;column_width id=&quot;0&quot; width=&quot;300&quot;/&gt;&lt;column_width id=&quot;1&quot; width=&quot;0&quot;/&gt;&lt;column_width id=&quot;2&quot; width=&quot;100&quot;/&gt;&lt;column_width id=&quot;3&quot; width=&quot;1712&quot;/&gt;&lt;column_width id=&quot;4&quot; width=&quot;0&quot;/&gt;&lt;expanded_item id=&quot;0&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;1&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;2&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;3&quot; parent=&quot;1&quot;/&gt;&lt;/tab_structure&gt;&lt;tab_browse&gt;&lt;current_table name=&quot;4,5:mainVista&quot;/&gt;&lt;default_encoding codec=&quot;&quot;/&gt;&lt;browse_table_settings&gt;&lt;table schema=&quot;main&quot; name=&quot;Vista&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort&gt;&lt;column index=&quot;1&quot; mode=&quot;0&quot;/&gt;&lt;/sort&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;88&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;72&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;112&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;133&quot;/&gt;&lt;column index=&quot;5&quot; value=&quot;99&quot;/&gt;&lt;column index=&quot;6&quot; value=&quot;40&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;cliente&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;88&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;112&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;133&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;99&quot;/&gt;&lt;column index=&quot;5&quot; value=&quot;73&quot;/&gt;&lt;column index=&quot;6&quot; value=&quot;72&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;cuenta&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;79&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;88&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;61&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;233&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;empleado&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort&gt;&lt;column index=&quot;2&quot; mode=&quot;1&quot;/&gt;&lt;/sort&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;89&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;113&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;134&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;141&quot;/&gt;&lt;column index=&quot;6&quot; value=&quot;72&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;prestamo&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;54&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;87&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;73&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;84&quot;/&gt;&lt;column index=&quot;5&quot; value=&quot;88&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;sqlite_sequence&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;63&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;40&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;sucursal&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;72&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;110&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;138&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;132&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;/browse_table_settings&gt;&lt;/tab_browse&gt;&lt;tab_sql&gt;
+&lt;sql name=&quot;1&quot;&gt;
+CREATE VIEW Vista 
+AS SELECT
+customer_id,
+branch_id,
+customer_name,
+customer_surname,
+customer_DNI,
+(2022-substr(dob, 1, 4)) AS Edad
+FROM cliente
+&lt;/sql&gt;
+
+&lt;sql name=&quot;1.1&quot;&gt;
+SELECT customer_name, customer_surname, Edad, customer_DNI
+FROM Vista
+WHERE Edad &amp;gt; 40
+ORDER BY customer_DNI
+&lt;/sql&gt;
+
+&lt;sql name=&quot;1.2&quot;&gt;
+SELECT customer_name, customer_surname, Edad, customer_DNI
+FROM Vista
+WHERE customer_name = &amp;quot;Anne&amp;quot; OR customer_name = &amp;quot;Tyler&amp;quot;
+ORDER BY Edad 
+&lt;/sql&gt;
+
+&lt;sql name=&quot;2&quot;&gt;
+INSERT INTO cliente (customer_name, customer_surname, customer_DNI, branch_id, dob)
+VALUES (&amp;quot;Lois&amp;quot;, &amp;quot;Stout&amp;quot;, &amp;quot;47730534&amp;quot;, &amp;quot;80&amp;quot;, &amp;quot;1984-07-07&amp;quot;),
+(&amp;quot;Hall&amp;quot;, &amp;quot;Mcconnell&amp;quot;, &amp;quot;52055464&amp;quot;, &amp;quot;45&amp;quot;, &amp;quot;1968-04-30&amp;quot;),
+(&amp;quot;Hilel&amp;quot;, &amp;quot;Mclean&amp;quot;, &amp;quot;43625213&amp;quot;, &amp;quot;77&amp;quot;, &amp;quot;1993-03-28&amp;quot;),
+(&amp;quot;Jin&amp;quot;, &amp;quot;Cooley&amp;quot;, &amp;quot;21207908&amp;quot;, &amp;quot;96&amp;quot;, &amp;quot;1959-08-24&amp;quot;),
+(&amp;quot;Gabriel&amp;quot;, &amp;quot;Harmon&amp;quot;, &amp;quot;57063950&amp;quot;, &amp;quot;27&amp;quot;, &amp;quot;1976-04-01&amp;quot;)
+&lt;/sql&gt;
+
+&lt;sql name=&quot;2.1&quot;&gt;
+SELECT customer_name, customer_surname, customer_DNI, branch_id, dob
+FROM cliente
+ORDER BY customer_id DESC
+LIMIT 5
+&lt;/sql&gt;
+
+&lt;sql name=&quot;3&quot;&gt;
+UPDATE cliente
+SET branch_id = &amp;quot;10&amp;quot;
+WHERE customer_id BETWEEN 501 AND 505
+&lt;/sql&gt;
+
+&lt;sql name=&quot;4&quot;&gt;
+DELETE FROM cliente
+WHERE customer_name = &amp;quot;Noel&amp;quot; AND customer_surname = &amp;quot;David&amp;quot;
+&lt;/sql&gt;
+
+&lt;sql name=&quot;5&quot;&gt;
+SELECT loan_type
+FROM prestamo
+ORDER BY loan_total DESC
+LIMIT 1
+&lt;/sql&gt;
+
+&lt;current_tab id=&quot;0&quot;/&gt;&lt;/tab_sql&gt;&lt;/sqlb_project&gt;</sql><sql name="Problematica3">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;sqlb_project&gt;&lt;db path=&quot;C:/Users/vicky/Desktop/ITBA  readonly=&quot;0&quot; foreign_keys=&quot;1&quot; case_sensitive_like=&quot;0&quot; temp_store=&quot;0&quot; wal_autocheckpoint=&quot;1000&quot; synchronous=&quot;2&quot;/&gt;&lt;attached/&gt;&lt;window&gt;&lt;main_tabs open=&quot;structure browser pragmas query&quot; current=&quot;3&quot;/&gt;&lt;/window&gt;&lt;tab_structure&gt;&lt;column_width id=&quot;0&quot; width=&quot;300&quot;/&gt;&lt;column_width id=&quot;1&quot; width=&quot;0&quot;/&gt;&lt;column_width id=&quot;2&quot; width=&quot;100&quot;/&gt;&lt;column_width id=&quot;3&quot; width=&quot;1712&quot;/&gt;&lt;column_width id=&quot;4&quot; width=&quot;0&quot;/&gt;&lt;expanded_item id=&quot;0&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;1&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;2&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;3&quot; parent=&quot;1&quot;/&gt;&lt;/tab_structure&gt;&lt;tab_browse&gt;&lt;current_table name=&quot;4,7:maincliente&quot;/&gt;&lt;default_encoding codec=&quot;&quot;/&gt;&lt;browse_table_settings&gt;&lt;table schema=&quot;main&quot; name=&quot;cliente&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;88&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;112&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;133&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;99&quot;/&gt;&lt;column index=&quot;5&quot; value=&quot;73&quot;/&gt;&lt;column index=&quot;6&quot; value=&quot;72&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;/browse_table_settings&gt;&lt;/tab_browse&gt;&lt;tab_sql&gt;&lt;sql name=&quot;SQL 1&quot;&gt;SELECT cuenta.account_id as Cuenta, balance
+FROM cuenta 
+WHERE balance &amp;lt; 0
+
+
+SELECT customer_surname, customer_name 
+FROM cliente 
+WHERE customer_surname like 'Z%'  
+SELECT cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', dob ) as int) AS Edad from cliente;
+
+
+SELECT customer_name, customer_surname, dob, branch_id 
+FROM cliente 
+WHERE customer_name= 'Brendan' ORDER BY branch_id;
+
+SELECT customer_name, customer_surname, loan_total, loan_type 
+FROM cliente 
+JOIN prestamo on prestamo.customer_id = cliente.customer_id 
+WHERE loan_total &amp;gt; 800000.00 AND loan_type = 'PRENDARIO';
+
+SELECT avg(loan_total) AS Promedio 
+FROM prestamo;
+SELECT loan_total, customer_id
+FROM prestamo 
+WHERE loan_total &amp;gt; 47414308.36;
+ 
+SELECT balance 
+FROM cuenta
+WHERE balance &amp;gt; 8000.00
+ORDER BY balance 
+LIMIT 5;
+                            
+&lt;/sql&gt;&lt;current_tab id=&quot;0&quot;/&gt;&lt;/tab_sql&gt;&lt;/sqlb_project&gt;</sql><sql name="Problematica4">?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;sqlb_project&gt;&lt;db path=&quot;D:/itbank.db&quot; readonly=&quot;0&quot; foreign_keys=&quot;1&quot; case_sensitive_like=&quot;0&quot; temp_store=&quot;0&quot; wal_autocheckpoint=&quot;1000&quot; synchronous=&quot;2&quot;/&gt;&lt;attached/&gt;&lt;window&gt;&lt;main_tabs open=&quot;structure browser pragmas query&quot; current=&quot;3&quot;/&gt;&lt;/window&gt;&lt;tab_structure&gt;&lt;column_width id=&quot;0&quot; width=&quot;300&quot;/&gt;&lt;column_width id=&quot;1&quot; width=&quot;0&quot;/&gt;&lt;column_width id=&quot;2&quot; width=&quot;150&quot;/&gt;&lt;column_width id=&quot;3&quot; width=&quot;5224&quot;/&gt;&lt;column_width id=&quot;4&quot; width=&quot;0&quot;/&gt;&lt;expanded_item id=&quot;2&quot; parent=&quot;0&quot;/&gt;&lt;expanded_item id=&quot;0&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;1&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;2&quot; parent=&quot;1&quot;/&gt;&lt;expanded_item id=&quot;3&quot; parent=&quot;1&quot;/&gt;&lt;/tab_structure&gt;&lt;tab_browse&gt;&lt;current_table name=&quot;4,11:mainDirecciones&quot;/&gt;&lt;default_encoding codec=&quot;&quot;/&gt;&lt;browse_table_settings&gt;&lt;table schema=&quot;main&quot; name=&quot;Direcciones&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;139&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;111&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;92&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;286&quot;/&gt;&lt;column index=&quot;5&quot; value=&quot;111&quot;/&gt;&lt;column index=&quot;6&quot; value=&quot;87&quot;/&gt;&lt;column index=&quot;7&quot; value=&quot;116&quot;/&gt;&lt;column index=&quot;8&quot; value=&quot;142&quot;/&gt;&lt;column index=&quot;9&quot; value=&quot;140&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;Tarjetas&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;120&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;226&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;61&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;163&quot;/&gt;&lt;column index=&quot;5&quot; value=&quot;191&quot;/&gt;&lt;column index=&quot;6&quot; value=&quot;112&quot;/&gt;&lt;column index=&quot;7&quot; value=&quot;106&quot;/&gt;&lt;column index=&quot;8&quot; value=&quot;140&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;cliente&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;138&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;175&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;207&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;159&quot;/&gt;&lt;column index=&quot;5&quot; value=&quot;109&quot;/&gt;&lt;column index=&quot;6&quot; value=&quot;115&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;cuenta&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort&gt;&lt;column index=&quot;5&quot; mode=&quot;0&quot;/&gt;&lt;/sort&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;124&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;138&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;91&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;300&quot;/&gt;&lt;column index=&quot;5&quot; value=&quot;139&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;table schema=&quot;main&quot; name=&quot;sucursal&quot; show_row_id=&quot;0&quot; encoding=&quot;&quot; plot_x_axis=&quot;&quot; unlock_view_pk=&quot;_rowid_&quot;&gt;&lt;sort/&gt;&lt;column_widths&gt;&lt;column index=&quot;1&quot; value=&quot;115&quot;/&gt;&lt;column index=&quot;2&quot; value=&quot;175&quot;/&gt;&lt;column index=&quot;3&quot; value=&quot;209&quot;/&gt;&lt;column index=&quot;4&quot; value=&quot;207&quot;/&gt;&lt;/column_widths&gt;&lt;filter_values/&gt;&lt;conditional_formats/&gt;&lt;row_id_formats/&gt;&lt;display_formats/&gt;&lt;hidden_columns/&gt;&lt;plot_y_axes/&gt;&lt;global_filter/&gt;&lt;/table&gt;&lt;/browse_table_settings&gt;&lt;/tab_browse&gt;&lt;tab_sql&gt;&lt;sql name=&quot;SQL 1&quot;&gt;/* Listar la cantidad de clientes por nombre de sucursal ordenando de mayor
+a menor */
+SELECT count(*) as Cantidad_Clientes, c.branch_id
+FROM cliente c INNER JOIN sucursal s ON c.branch_id = s.branch_id
+GROUP BY c.branch_id
+ORDER BY c.branch_id DESC;
+ 
+
+ /* Obtener la cantidad de tarjetas de crédito por tipo por sucursal */
+
+SELECT count(*) as Cantidad_Tarjetas, c.customer_name as Nombre_Cliente, c.branch_id as ID_Sucursal
+FROM Tarjetas t INNER JOIN (SELECT * FROM cliente c INNER JOIN sucursal s ON c.branch_id = s.branch_id) c ON t.customer_id = c.customer_id
+GROUP BY c.branch_id;
+
+/* Obtener la cantidad de empleados por cliente por sucursal en un número real */
+
+SELECT count(*) as Cantidad_Empleados, s.branch_name as Nombre_Sucursal, s.branch_id as ID_Sucursal
+FROM empleado e INNER JOIN (SELECT * FROM cliente c INNER JOIN sucursal s ON c.branch_id = s.branch_id) s ON e.branch_id = s.branch_id
+GROUP BY s.branch_id;
+
+/* La información de las cuentas resulta critica para la compañía, por eso es
+necesario crear una tabla denominada “auditoria_cuenta” para guardar los
+datos movimientos, con los siguientes campos: old_id, new_id, old_balance,
+new_balance, old_iban, new_iban, old_type, new_type, user_action,
+created_at */
+
+CREATE TABLE auditoria_cuenta (
+			old_id INTEGER PRIMARY KEY,
+			new_id INTEGER NOT NULL,
+			old_balance INTEGER NOT NULL,
+			new_balance INTEGER NOT NULL,
+			old_iban TEXT NOT NULL,
+			new_iban TEXT NOT NULL,
+			old_type TEXT NOT NULL,
+			new_type TEXT NOT NULL,
+			user_action TEXT NOT NULL,
+			created_at TEXT
+			);
+/* Crear la tabla “movimientos” con los campos de identificación del
+movimiento, número de cuenta, monto, tipo de operación y hora */
+
+CREATE TABLE movimientos (
+						id_movimiento INTEGER NOT NULL PRIMARY KEY,
+						numero_cuenta INTEGER NOT NULL,
+						monto REAL NOT NULL,
+						tipo_operacion TEXT NOT NULL,
+						hora TEXT NOT NULL
+						);
+
+&lt;/sql&gt;&lt;current_tab id=&quot;0&quot;/&gt;&lt;/tab_sql&gt;&lt;/sqlb_project&gt;</sql><current_tab id="0"/></tab_sql></sqlb_project>
